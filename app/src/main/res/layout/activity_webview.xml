@@ -13,15 +13,15 @@
     android:layout_height="55dp"
     android:layout_marginTop="10dp">
 
-    <ImageView
-        android:id="@+id/ivBackBtn"
-        android:layout_width="25dp"
-        android:layout_height="25dp"
-        android:layout_centerVertical="true"
-        android:layout_marginLeft="10dp"
-        android:src="@drawable/ic_baseline_arrow_back_ios_new_24"
+        <ImageView
+            android:id="@+id/ivBackBtnWebView"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:src="@drawable/ic_baseline_arrow_back_ios_new_24"
 
-        />
+            />
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -32,12 +32,12 @@
 
 
         <TextView
-            android:id="@+id/a_stockShortName"
+            android:id="@+id/tvUrl"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="3dp"
             android:fontFamily="@font/cmcfont"
-            android:text="BTC"
+            android:text="CMC"
             android:textColor="@color/black"
             android:textSize="20dp" />
 

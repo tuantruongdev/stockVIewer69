@@ -121,23 +121,17 @@
 
                 </RelativeLayout>
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/fragment_container_gainer_loser"
-                    android:text="@string/lorem1"
-                    android:textSize="20dp"
-                    android:id="@+id/lorem1"
-                    />
-                <TextView
-                    android:id="@+id/lorem2"
 
+                <androidx.recyclerview.widget.RecyclerView
+                    android:layout_margin="15dp"
+                    android:id="@+id/newsRecycleViewMain"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/lorem1"
-                    android:text="@string/lorem1"
-                    android:textSize="20dp"
-                    />
+                    android:layout_below="@+id/fragment_container_gainer_loser"
+                    tools:listitem="@layout/news_items">
+
+                </androidx.recyclerview.widget.RecyclerView>
+
             </RelativeLayout>
 
 

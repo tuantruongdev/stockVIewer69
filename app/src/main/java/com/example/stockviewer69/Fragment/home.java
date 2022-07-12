@@ -1,5 +1,7 @@
 package com.example.stockviewer69.Fragment;
 
+import static android.content.ContentValues.TAG;
+
 import android.os.Build;
 import android.os.Bundle;
 
@@ -8,25 +10,30 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 
+import com.example.stockviewer69.Adapter.NewsAdapter;
+import com.example.stockviewer69.Model.ApiFetch;
+import com.example.stockviewer69.Model.NewsModel;
 import com.example.stockviewer69.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link home#newInstance} factory method to
- * create an instance of this fragment.
- */
+import java.net.MalformedURLException;
+import java.util.ArrayList;
+
 public class home extends Fragment {
-
-
+    ArrayList<NewsModel.Article> news=new ArrayList<>();
+    NewsAdapter newsAdapter;
+    RecyclerView newsRecyclerView;
     private final int TOP_10_STOCK=1001;
     private final int TOP_GAIN_STOCK=1002;
     private final int TOP_LOSE_STOCK=1003;
@@ -36,34 +43,14 @@ public class home extends Fragment {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment home.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static home newInstance(String param1, String param2) {
-        home fragment = new home();
-        Bundle args = new Bundle();
-
-        return fragment;
-    }
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-
-
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_home, container, false);
     }
 
@@ -71,12 +58,8 @@ public class home extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         swipeRefreshLayout=getView().findViewById(R.id.swipeRefreshLayout);
-
         FragmentManager fm=getActivity().getSupportFragmentManager();
         FragmentTransaction ft=fm.beginTransaction();
-
-
-
         //create bundle for carrying data
         Bundle bundle = new Bundle();
         bundle.putString("feature_name","Top 10 market cap stock:");
@@ -86,8 +69,6 @@ public class home extends Fragment {
         ft.add(R.id.fragment_container, featuresFragment);
         //  ft.add(R.id.fragment_container_gainer_loser,featuresFragment);
         ft.commit();
-
-
         FragmentManager fm2=getActivity().getSupportFragmentManager();
         FragmentTransaction ft2=fm2.beginTransaction();
 
@@ -101,6 +82,15 @@ public class home extends Fragment {
         ft2.commit();
 
 
+        newsRecyclerView=getView().findViewById(R.id.newsRecycleViewMain);
+        if(newsRecyclerView == null){
+            Log.d(TAG, "onViewCreated: is null");
+        }
+        newsAdapter=new NewsAdapter(news, getContext(),home.this);
+        LinearLayoutManager linearLayoutManager=new LinearLayoutManager(getContext());
+        newsRecyclerView.setAdapter(newsAdapter);
+        newsRecyclerView.setLayoutManager(linearLayoutManager);
+
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -109,6 +99,25 @@ public class home extends Fragment {
                 featuresFragment.reloadList();
             }
         });
+        init();
+    }
+
+    public void updateListNews(ArrayList<NewsModel.Article> article){
+        for (int i = 0; i < article.size()-1; i++) {
+            news.add(article.get(i));
+            Log.d(TAG, "updateListNews: "+article.get(i).title);
+        }
+        newsAdapter.notifyDataSetChanged();
 
     }
+    private void init(){
+        try {
+            ApiFetch apiFetch  = new ApiFetch();
+            apiFetch.getMainArticle(this);
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+
+    }
+
 }

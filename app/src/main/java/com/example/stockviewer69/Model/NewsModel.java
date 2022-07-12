@@ -1,7 +1,15 @@
 package com.example.stockviewer69.Model;
 
+import static android.content.ContentValues.TAG;
+
+import android.util.Log;
+
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 public class NewsModel {
     private String status;
@@ -41,7 +49,7 @@ public class NewsModel {
     public static class Article{
         public Source source;
 
-        public Article(Source source, String author, String title, String description, String url, String urlToImage, Date publishedAt, String content) {
+        public Article(Source source, String author, String title, String description, String url, String urlToImage, String publishedAt, String content) {
             this.source = source;
             this.author = author;
             this.title = title;
@@ -57,8 +65,64 @@ public class NewsModel {
         public String description;
         public String url;
         public String urlToImage;
-        public Date publishedAt;
+        public String publishedAt;
         public String content;
+        public Long getTimeStamp(){
+            try {
+                SimpleDateFormat format =new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
+                Date past = format.parse(this.publishedAt);
+                Date current= new Date();
+
+                return current.getTime()/1000 - past.getTime()/1000;
+//                Date now = new Date();
+//                System.out.println(TimeUnit.MILLISECONDS.toMillis(now.getTime() - past.getTime()) + " milliseconds ago");
+//                System.out.println(TimeUnit.MILLISECONDS.toMinutes(now.getTime() - past.getTime()) + " minutes ago");
+//                System.out.println(TimeUnit.MILLISECONDS.toHours(now.getTime() - past.getTime()) + " hours ago");
+//                System.out.println(TimeUnit.MILLISECONDS.toDays(now.getTime() - past.getTime()) + " days ago");
+            }
+            catch (Exception j){
+                j.printStackTrace();
+            }
+            return Long.valueOf(0);
+        }
+
+
+
+
+        public  String toDuration() {
+            List<Long> times = new ArrayList<>();
+            times.add(  TimeUnit.DAYS.toMillis(365)/1000);
+            times.add(TimeUnit.DAYS.toMillis(30)/1000);
+            times.add(TimeUnit.DAYS.toMillis(1)/1000);
+            times.add(TimeUnit.HOURS.toMillis(1)/1000);
+            times.add(TimeUnit.MINUTES.toMillis(1)/1000);
+            times.add(TimeUnit.SECONDS.toMillis(1)/1000 );
+            List<String> timesString=new ArrayList<>() ;
+
+            timesString.add("year");
+            timesString.add("month");
+            timesString.add("day");
+            timesString.add("minute");
+            timesString.add("second");
+
+
+            long duration=getTimeStamp();
+
+            StringBuffer res = new StringBuffer();
+            for(int i=0;i< times.size(); i++) {
+                Long current = times.get(i);
+                long temp = duration/current;
+                if(temp>0) {
+                    res.append(temp).append(" ").append(timesString.get(i) ).append(temp != 1 ? "s" : "").append(" ago");
+                    break;
+                }
+            }
+            if("".equals(res.toString()))
+                return "0 seconds ago";
+            else
+                Log.d(TAG, "toDuration: "+res.toString());
+                return res.toString();
+        }
     }
 
 
@@ -74,4 +138,6 @@ public class NewsModel {
         public String id;
         public String name;
     }
+
+
 }

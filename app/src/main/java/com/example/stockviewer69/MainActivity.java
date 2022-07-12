@@ -39,13 +39,16 @@ import com.google.android.material.navigation.NavigationBarView;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 public class MainActivity extends AppCompatActivity {
 
 
-    private final int TOP_10_STOCK=1001;
-    private final int TOP_GAIN_STOCK=1002;
-    private final int TOP_LOSE_STOCK=1003;
+    private final int TOP_10_STOCK = 1001;
+    private final int TOP_GAIN_STOCK = 1002;
+    private final int TOP_LOSE_STOCK = 1003;
 
     SwipeRefreshLayout swipeRefreshLayout;
     Fragment homeFragment;
@@ -53,17 +56,14 @@ public class MainActivity extends AppCompatActivity {
     Fragment othersFragment;
     Fragment activeFragment;
     FragmentManager fragmentManager;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         //bottom nav
-        BottomNavigationView navigation=findViewById(R.id.navigation);
-        navigation.setOnItemSelectedListener(mOnNavigationItemSelectedListener );
-
-
-
+        BottomNavigationView navigation = findViewById(R.id.navigation);
+        navigation.setOnItemSelectedListener(mOnNavigationItemSelectedListener);
         if (Build.VERSION.SDK_INT >= 21) {
             Window window = getWindow();
             window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
@@ -71,62 +71,52 @@ public class MainActivity extends AppCompatActivity {
             window.setStatusBarColor(getResources().getColor(R.color.primaryDark));
         }
 
-
-//
-//        btn=findViewById(R.id.btnOpenLineChart);
-//        btn.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//
-//                Intent intent= new Intent(MainActivity.this,LineChartActivity.class);
-//                startActivity(intent);
-//                finish();
-//            }
-//        });
         //init fragment
-        homeFragment=new home();
-        detailsFragment=new details();
-        othersFragment=new others();
-        fragmentManager=getSupportFragmentManager();
+        homeFragment = new home();
+        detailsFragment = new details();
+        othersFragment = new others();
+        fragmentManager = getSupportFragmentManager();
         fragmentManager.beginTransaction()
-                .add(R.id.frame_container,homeFragment,"Homez")
-                .add(R.id.frame_container,detailsFragment,"Detailsz")
-                .add(R.id.frame_container,othersFragment,"Othersz")
+                .add(R.id.frame_container, homeFragment, "Homez")
+                .add(R.id.frame_container, detailsFragment, "Detailsz")
+                .add(R.id.frame_container, othersFragment, "Othersz")
                 .commit();
         fragmentManager.beginTransaction().hide(homeFragment).hide(detailsFragment).hide(othersFragment).commit();
 
-        activeFragment=homeFragment;
+        activeFragment = homeFragment;
 
-        loadFragment(fragmentManager,homeFragment);
-       // mainStockRecycleView.addItemDecoration(new DividerItemDecoration(MainActivity.this,));
+        loadFragment(fragmentManager, homeFragment);
+        // mainStockRecycleView.addItemDecoration(new DividerItemDecoration(MainActivity.this,));
     }
-    private BottomNavigationView.OnItemSelectedListener mOnNavigationItemSelectedListener= new BottomNavigationView.OnItemSelectedListener() {
-            @Override
+
+    private BottomNavigationView.OnItemSelectedListener mOnNavigationItemSelectedListener = new BottomNavigationView.OnItemSelectedListener() {
+        @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
 
             switch (item.getItemId()) {
                 case R.id.navigation_home:
 
-                    loadFragment(fragmentManager,homeFragment);
+                    loadFragment(fragmentManager, homeFragment);
                     return true;
                 case R.id.navigation_details:
 
-                    loadFragment(fragmentManager,detailsFragment);
+                    loadFragment(fragmentManager, detailsFragment);
                     //Toast.makeText(MainActivity.this, "details", Toast.LENGTH_SHORT).show();
                     return true;
                 case R.id.navigation_others:
-                    loadFragment(fragmentManager,othersFragment);
+                    loadFragment(fragmentManager, othersFragment);
                     return true;
 
             }
             return false;
         }
     };
-    private void loadFragment(FragmentManager fm,Fragment targetFragment) {
+
+    private void loadFragment(FragmentManager fm, Fragment targetFragment) {
         Log.d(TAG, "loadFragment: switch fragment");
 
         fm.beginTransaction().hide(activeFragment).show(targetFragment).commit();
-        activeFragment=targetFragment;
+        activeFragment = targetFragment;
     }
 
 }

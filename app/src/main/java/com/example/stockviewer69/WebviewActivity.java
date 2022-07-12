@@ -5,14 +5,19 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.KeyEvent;
+import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 public class WebviewActivity extends AppCompatActivity {
     WebView theWebPage;
+    ImageView ivBack;
+    TextView tvUrl;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -24,8 +29,9 @@ public class WebviewActivity extends AppCompatActivity {
             window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
             window.setStatusBarColor(getResources().getColor(R.color.primaryDark));
         }
-
-       theWebPage = findViewById(R.id.webView);
+        tvUrl=findViewById(R.id.tvUrl);
+        ivBack=findViewById(R.id.ivBackBtnWebView);
+        theWebPage = findViewById(R.id.webView);
         theWebPage.setWebViewClient(new WebViewClient());
         WebSettings webSettings=theWebPage.getSettings();
         webSettings.setJavaScriptEnabled(true);
@@ -34,6 +40,21 @@ public class WebviewActivity extends AppCompatActivity {
        // theWebPage.getSettings().setPluginState(PluginState.ON);
         //setContentView(theWebPage);
         theWebPage.loadUrl(getIntent().getStringExtra("url"));
+        tvUrl.setText(getIntent().getStringExtra("source"));
+        bind();
+
+    }
+    public void bind(){
+        ivBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (theWebPage.canGoBack()) {
+                    theWebPage.goBack();
+                } else {
+                    finish();
+                }
+            }
+        });
     }
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
@@ -47,7 +68,6 @@ public class WebviewActivity extends AppCompatActivity {
                     }
                     return true;
             }
-
         }
         return super.onKeyDown(keyCode, event);
     }

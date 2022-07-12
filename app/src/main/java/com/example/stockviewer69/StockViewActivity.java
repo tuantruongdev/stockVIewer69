@@ -95,19 +95,9 @@ public class StockViewActivity extends AppCompatActivity {
         tv1y=findViewById(R.id.tv1y);
         tvAt=findViewById(R.id.tvAt);
         stockViewActivity=this;
-        newsRecyclerView=findViewById(R.id.newsRecycleView);
-    
 
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
-        sdf.setTimeZone(TimeZone.getTimeZone("GMT"));
-//        Date date = null;
-//        try {
-//             date= sdf.parse("2013-09-29T18:46:19Z");
-//        } catch (ParseException e) {
-//            e.printStackTrace();
-//        }
-       // news.add(new NewsModel.Article(new NewsModel.Source("sp1","sputnik"),"truong","usa invade america","","http://google.com","https://www.aljazeera.com/wp-content/uploads/2022/07/lead.jpg?resize=570%2C380",date,"content"));
-         newsAdapter=new NewsAdapter(news,StockViewActivity.this,stockViewActivity);
+        newsRecyclerView=findViewById(R.id.newsRecycleView);
+        newsAdapter=new NewsAdapter(news,StockViewActivity.this,stockViewActivity);
         LinearLayoutManager linearLayoutManager=new LinearLayoutManager(StockViewActivity.this);
         newsRecyclerView.setAdapter(newsAdapter);
         newsRecyclerView.setLayoutManager(linearLayoutManager);
@@ -236,11 +226,6 @@ public class StockViewActivity extends AppCompatActivity {
     public void updateMarketChart(OverViewStockModel marketChartModel){
       //  Log.d(TAG, "updateMarketChart: "+marketChartModel.getPrices().get(0).get(1));
         ArrayList<Entry> entries=new ArrayList<>();
-
-
-//        for (int i = 0; i<marketChartModel.getEntryStockPriceHistory().size(); i++){
-//            entries.add(new Entry(i, Float.valueOf( marketChartModel.getPrices().get(i).get(1).toString())));
-//        }
         entries=marketChartModel.getEntryStockPriceHistory();
         LineDataSet dataSet= new LineDataSet(entries,"dataset");
         int lineColor;
@@ -272,8 +257,6 @@ public class StockViewActivity extends AppCompatActivity {
                 entries.add(new Entry(i, Float.valueOf( marketChartModel.getPrices().get(i).get(1).toString())));
             }
 
-
-    //    entries=marketChartModel.getEntryStockPriceHistory();
         LineDataSet dataSet= new LineDataSet(entries,"dataset");
         int lineColor;
         if(stockGain<0){
@@ -302,6 +285,7 @@ public class StockViewActivity extends AppCompatActivity {
        // news=article;
         for (int i = 0; i < article.size()-1; i++) {
             news.add(article.get(i));
+            Log.d(TAG, "updateListNews: "+article.get(i).title);
         }
         newsAdapter.notifyDataSetChanged();
 

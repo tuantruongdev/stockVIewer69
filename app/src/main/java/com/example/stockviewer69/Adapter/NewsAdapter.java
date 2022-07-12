@@ -17,10 +17,12 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.example.stockviewer69.Fragment.FeaturesFragment;
 import com.example.stockviewer69.Model.NewsModel;
 import com.example.stockviewer69.Model.OverViewStockModel;
 import com.example.stockviewer69.R;
@@ -38,7 +40,14 @@ import java.util.TimeZone;
 
 public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> {
     private ArrayList<NewsModel.Article> listNews;
-    Activity mActivity;
+    Activity mActivity=null;
+    Fragment mFragment=null;
+
+    public NewsAdapter(ArrayList<NewsModel.Article> listNews, Context mContext,Fragment fragment) {
+        this.listNews = listNews;
+        this.mContext = mContext;
+        this.mFragment= fragment;
+    }
     public NewsAdapter(ArrayList<NewsModel.Article> listNews, Context mContext,Activity activity) {
         this.listNews = listNews;
         this.mContext = mContext;
@@ -47,7 +56,6 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> {
 
     private LayoutInflater layoutInflater;
     Context mContext;
-
 
     @NonNull
     @Override
@@ -62,37 +70,31 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> {
         NewsModel.Article news= getItem(position);
         holder.tvTitle.setText(news.title);
         holder.tvAuthor.setText(news.source.name);
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
-        sdf.setTimeZone(TimeZone.getTimeZone("GMT"));
-        try {
-           Date date= sdf.parse("2013-09-29T18:46:19Z");
-            Timestamp timestamp = new java.sql.Timestamp(date.getTime());
-            Log.d(TAG, "onBindViewHolder: "+timestamp.getTime());
+        holder.tvTimeAgo.setText(news.toDuration());
 
-
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
         Glide.with(mContext).load(news.urlToImage)
                 .placeholder(R.mipmap.default_coin)
                 .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
                 .into(holder.ivNewsThumb);
         Log.d(TAG, "onBindViewHolder: "+news.urlToImage);
-        // holder.tvTimeAgo.setText(news.publishedAt);
         
         holder.setItemClickListener(new MainStockAdapter.ItemClickListener() {
             @Override
             public void onItemClick(View view, int position, boolean isLongClick) {
                 Log.d(TAG, "onItemClick: ");
                 Intent intent=new Intent(mContext, WebviewActivity.class);
-
                 intent.putExtra("url",news.url);
-
+                intent.putExtra("source",news.source.name);
                 mContext.startActivity(intent);
-                mActivity.overridePendingTransition(R.anim.slide_in,R.anim.slide_nothin);
+                if (mActivity!=null) {
+                    mActivity.overridePendingTransition(R.anim.slide_in, R.anim.slide_nothin);
+                }
             }
         });
     }
+
+
+
 
     @Override
     public int getItemCount() {
@@ -105,7 +107,6 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> {
         TextView tvTitle,tvAuthor,tvTimeAgo;
         ImageView ivNewsThumb;
         private MainStockAdapter.ItemClickListener itemClickListener;
-
         public void setItemClickListener(MainStockAdapter.ItemClickListener itemClickListener)
         {
             this.itemClickListener = itemClickListener;
@@ -125,7 +126,8 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> {
             itemClickListener.onItemClick(v,getAdapterPosition(),false);
         }
     }
-    public interface ItemClickListener {
+
+        public interface ItemClickListener {
         void onItemClick(View view, int position,boolean isLongClick);
     }
 }
