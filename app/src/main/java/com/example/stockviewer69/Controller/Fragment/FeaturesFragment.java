@@ -1,6 +1,4 @@
-package com.example.stockviewer69.Fragment;
-
-import static android.content.ContentValues.TAG;
+package com.example.stockviewer69.Controller.Fragment;
 
 import android.os.Bundle;
 
@@ -8,27 +6,19 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.stockviewer69.Adapter.MainStockAdapter;
-import com.example.stockviewer69.Adapter.NewsAdapter;
 import com.example.stockviewer69.Model.ApiFetch;
-import com.example.stockviewer69.Model.DetailStockModel;
-import com.example.stockviewer69.Model.NewsModel;
 import com.example.stockviewer69.Model.OverViewStockModel;
 import com.example.stockviewer69.R;
-import com.example.stockviewer69.StockViewActivity;
-import com.github.mikephil.charting.data.Entry;
 
 import java.net.MalformedURLException;
 import java.util.ArrayList;

@@ -8,8 +8,8 @@
 //
 //import androidx.annotation.NonNull;
 //
-//import com.example.stockviewer69.Fragment.FeaturesFragment;
-//import com.example.stockviewer69.StockViewActivity;
+//import com.example.stockviewer69.Controller.Fragment.FeaturesFragment;
+//import com.example.stockviewer69.Controller.Activity.StockViewActivity;
 //import com.google.gson.Gson;
 //
 //import java.io.IOException;

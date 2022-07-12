@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/pure"
-    tools:context=".StockViewActivity">
+    tools:context=".Controller.Activity.StockViewActivity">
 
     <RelativeLayout
         android:id="@+id/layoutToolBar"

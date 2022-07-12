@@ -2,12 +2,9 @@ package com.example.stockviewer69.Adapter;
 
 import static android.content.ContentValues.TAG;
 
-import static com.example.stockviewer69.Model.IRetrofitApiFetch.gson;
-
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.util.AttributeSet;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,27 +13,16 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.example.stockviewer69.Fragment.FeaturesFragment;
 import com.example.stockviewer69.Model.NewsModel;
-import com.example.stockviewer69.Model.OverViewStockModel;
 import com.example.stockviewer69.R;
-import com.example.stockviewer69.StockViewActivity;
-import com.example.stockviewer69.WebviewActivity;
+import com.example.stockviewer69.Controller.Activity.WebviewActivity;
 
-import java.math.BigDecimal;
-import java.sql.Timestamp;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.Locale;
-import java.util.TimeZone;
 
 public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> {
     private ArrayList<NewsModel.Article> listNews;

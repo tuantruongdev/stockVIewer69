@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
 
     android:background="#121212"
-    tools:context=".MainActivity">
+    tools:context=".Controller.Activity.MainActivity">
 
     <RelativeLayout
 
@@ -76,7 +76,7 @@
     <!--       android:layout_below="@+id/action_bar"-->
     <!--       android:layout_width="match_parent"-->
     <!--       android:layout_height="wrap_content"-->
-    <!--       class="com.example.stockviewer69.Fragment.FeaturesFragment"-->
+    <!--       class="com.example.stockviewer69.Controller.Fragment.FeaturesFragment"-->
     <!--       />-->
     <androidx.cardview.widget.CardView
         android:layout_width="wrap_content"

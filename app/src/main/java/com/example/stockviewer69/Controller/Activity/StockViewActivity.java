@@ -1,4 +1,4 @@
-package com.example.stockviewer69;
+package com.example.stockviewer69.Controller.Activity;
 
 import static android.content.ContentValues.TAG;
 
@@ -9,7 +9,6 @@ import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
@@ -17,10 +16,8 @@ import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -32,20 +29,15 @@ import com.example.stockviewer69.Model.MarketChartModel;
 import com.example.stockviewer69.Model.NewsModel;
 import com.example.stockviewer69.Model.OverViewStockModel;
 import com.example.stockviewer69.Model.StockMarketData;
+import com.example.stockviewer69.R;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
-import com.google.gson.JsonElement;
 
-import java.net.MalformedURLException;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.Locale;
-import java.util.TimeZone;
 
 public class StockViewActivity extends AppCompatActivity {
     ImageView ivBack,ivStockIcon;

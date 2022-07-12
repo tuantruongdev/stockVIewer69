@@ -1,8 +1,7 @@
-package com.example.stockviewer69.Fragment;
+package com.example.stockviewer69.Controller.Fragment;
 
 import static android.content.ContentValues.TAG;
 
-import android.os.Build;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -18,14 +17,11 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
-import android.view.WindowManager;
 
 import com.example.stockviewer69.Adapter.NewsAdapter;
 import com.example.stockviewer69.Model.ApiFetch;
 import com.example.stockviewer69.Model.NewsModel;
 import com.example.stockviewer69.R;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.net.MalformedURLException;
 import java.util.ArrayList;

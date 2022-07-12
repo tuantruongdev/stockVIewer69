@@ -1,20 +1,16 @@
 package com.example.stockviewer69.Adapter;
 
-import static android.content.ContentValues.TAG;
-
 import static com.example.stockviewer69.Model.IRetrofitApiFetch.gson;
 
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
@@ -22,12 +18,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.example.stockviewer69.MainActivity;
 import com.example.stockviewer69.Model.OverViewStockModel;
 import com.example.stockviewer69.R;
-import com.example.stockviewer69.StockViewActivity;
+import com.example.stockviewer69.Controller.Activity.StockViewActivity;
 import com.github.mikephil.charting.charts.LineChart;
-import com.github.mikephil.charting.data.DataSet;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;

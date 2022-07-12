@@ -1,4 +1,4 @@
-package com.example.stockviewer69;
+package com.example.stockviewer69.Controller.Activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -13,6 +13,8 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.example.stockviewer69.R;
 
 public class WebviewActivity extends AppCompatActivity {
     WebView theWebPage;

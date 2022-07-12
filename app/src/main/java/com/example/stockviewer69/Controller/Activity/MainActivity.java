@@ -1,4 +1,4 @@
-package com.example.stockviewer69;
+package com.example.stockviewer69.Controller.Activity;
 
 import static android.content.ContentValues.TAG;
 
@@ -6,42 +6,20 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
-import androidx.recyclerview.widget.DividerItemDecoration;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
-import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
-import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.Button;
-import android.widget.GridLayout;
-import android.widget.Toast;
 
-import com.example.stockviewer69.Adapter.MainStockAdapter;
-import com.example.stockviewer69.Fragment.FeaturesFragment;
-import com.example.stockviewer69.Fragment.details;
-import com.example.stockviewer69.Fragment.home;
-import com.example.stockviewer69.Fragment.others;
-import com.example.stockviewer69.Model.ApiFetch;
-import com.example.stockviewer69.Model.OverViewStockModel;
-import com.github.mikephil.charting.charts.LineChart;
-import com.github.mikephil.charting.data.Entry;
+import com.example.stockviewer69.Controller.Fragment.details;
+import com.example.stockviewer69.Controller.Fragment.home;
+import com.example.stockviewer69.Controller.Fragment.others;
+import com.example.stockviewer69.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.android.material.navigation.NavigationBarView;
-
-import java.io.IOException;
-import java.net.MalformedURLException;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 public class MainActivity extends AppCompatActivity {
 
