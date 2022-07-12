@@ -59,7 +59,7 @@ public class ApiFetch {
                     MarketChartModel rq=gson.fromJson(body,MarketChartModel.class);
                     Log.d(TAG, "1337: "+body);
 
-                    Log.d(TAG, "onResponse: "+String.valueOf( rq.getPrices().get(0).get(0)));
+             //       Log.d(TAG, "onResponse: "+String.valueOf( rq.getPrices().get(0).get(0)));
                     // ArrayList<OverViewStockModel> raw=new ArrayList<>();
                     //convert raw object to detalStockModel
                     // raw.add();
@@ -70,11 +70,11 @@ public class ApiFetch {
                         }
                     });
 
-                    Log.d(TAG, "1337: running");
+                    // Log.d(TAG, "1337: running");
                 }
             }
         });
-        Log.d(TAG, "1337: end");
+       // Log.d(TAG, "1337: end");
     }
 
     public void sendRequestByTime(String path, String method, FeaturesFragment featuresFragment, String symbol, String shortSymbol ,String stockId,String from) throws IOException {
