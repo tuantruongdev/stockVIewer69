@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+
+    android:background="#121212"
+    tools:context=".MainActivity">
+
+    <RelativeLayout
+
+        android:id="@+id/action_bar"
+        android:layout_width="match_parent"
+        android:layout_height="65dp">
+
+
+        <ImageView
+            android:id="@+id/logoCMC"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_centerVertical="true"
+
+            android:layout_marginLeft="25dp"
+            android:src="@mipmap/cmc_logo_white" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@id/logoCMC"
+            android:fontFamily="@font/noyhr_medium"
+            android:paddingLeft="10dp"
+            android:text="CoinMarketCap"
+            android:textColor="@color/white"
+            android:textSize="26dp"
+            android:textStyle="bold" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerInParent="true"
+            android:layout_marginRight="25dp"
+            android:showDividers="middle">
+
+            <ImageView
+
+                android:id="@+id/ivIconSearch"
+                android:layout_width="28dp"
+                android:layout_height="28dp"
+                android:layout_centerVertical="true"
+
+
+                android:layout_weight="1"
+                android:src="@drawable/ic_baseline_search_24" />
+
+            <ImageView
+
+                android:id="@+id/ivIconBell"
+                android:layout_width="28dp"
+                android:layout_height="28dp"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="15dp"
+
+                android:layout_weight="1"
+                android:src="@drawable/ic_baseline_notifications_none_24" />
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+    <!--   <fragment-->
+    <!--       android:id="@+id/frTopStock"-->
+    <!--       android:layout_below="@+id/action_bar"-->
+    <!--       android:layout_width="match_parent"-->
+    <!--       android:layout_height="wrap_content"-->
+    <!--       class="com.example.stockviewer69.Fragment.FeaturesFragment"-->
+    <!--       />-->
+    <androidx.cardview.widget.CardView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/action_bar"
+        android:layout_marginBottom="-40dp"
+        android:background="@color/pure"
+        app:cardCornerRadius="40dp">
+
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            android:id="@+id/swipeRefreshLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            >
+            <ScrollView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <RelativeLayout
+
+                    android:id="@+id/fragment_container"
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp"
+
+
+                    >
+
+                </RelativeLayout>
+
+                <RelativeLayout
+
+                    android:id="@+id/fragment_container_gainer_loser"
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp"
+                    android:layout_below="@+id/fragment_container">
+
+                </RelativeLayout>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/fragment_container_gainer_loser"
+                    android:text="@string/lorem1"
+                    android:textSize="20dp"
+                    android:id="@+id/lorem1"
+                    />
+                <TextView
+                    android:id="@+id/lorem2"
+
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/lorem1"
+                    android:text="@string/lorem1"
+                    android:textSize="20dp"
+                    />
+            </RelativeLayout>
+
+
+            </ScrollView>
+
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+    </androidx.cardview.widget.CardView>
+
+
+
+
+</RelativeLayout>

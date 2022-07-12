@@ -1,0 +1,54 @@
+package com.example.stockviewer69;
+
+import androidx.appcompat.app.AppCompatActivity;
+
+import android.os.Build;
+import android.os.Bundle;
+import android.view.KeyEvent;
+import android.view.Window;
+import android.view.WindowManager;
+import android.webkit.WebSettings;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
+
+public class WebviewActivity extends AppCompatActivity {
+    WebView theWebPage;
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_webview);
+        //intent.getStringExtra("stockShortName")
+        if (Build.VERSION.SDK_INT >= 21) {
+            Window window = getWindow();
+            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+            window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+            window.setStatusBarColor(getResources().getColor(R.color.primaryDark));
+        }
+
+       theWebPage = findViewById(R.id.webView);
+        theWebPage.setWebViewClient(new WebViewClient());
+        WebSettings webSettings=theWebPage.getSettings();
+        webSettings.setJavaScriptEnabled(true);
+        webSettings.setDomStorageEnabled(true);
+       // theWebPage.getSettings().setJavaScriptEnabled(true);
+       // theWebPage.getSettings().setPluginState(PluginState.ON);
+        //setContentView(theWebPage);
+        theWebPage.loadUrl(getIntent().getStringExtra("url"));
+    }
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (event.getAction() == KeyEvent.ACTION_DOWN) {
+            switch (keyCode) {
+                case KeyEvent.KEYCODE_BACK:
+                    if (theWebPage.canGoBack()) {
+                        theWebPage.goBack();
+                    } else {
+                        finish();
+                    }
+                    return true;
+            }
+
+        }
+        return super.onKeyDown(keyCode, event);
+    }
+}
