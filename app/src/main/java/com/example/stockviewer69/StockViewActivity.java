@@ -177,7 +177,7 @@ public class StockViewActivity extends AppCompatActivity {
         }
     }
     public void updateMarketData(StockMarketData stockMarketData){
-        Log.d(TAG, "updateMarketData: "+stockMarketData.name);
+    //    Log.d(TAG, "updateMarketData: "+stockMarketData.name);
         //tvMarketCap,tvFullyDilCap,tv24hHigh,tv24hLow,tvTotalMaxSupply,tvMarketRank,tvAth,tvAtl,tvMarketRank2;
         tvMarketCap.setText(truncateNumber(stockMarketData.market_data.market_cap.usd) +" $");
 

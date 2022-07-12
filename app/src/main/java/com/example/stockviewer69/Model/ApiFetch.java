@@ -103,7 +103,7 @@ public class ApiFetch {
 
     public void getArticle(String q, StockViewActivity stockViewActivity) {
         Log.d(TAG, "getArticle: " + q.toLowerCase());
-        IRetrofitApiFetch.iRetrofitApiFetch.getArticles(q.toLowerCase(), "2022-06-15", "2022-07-07", "popularity", "10", "1").enqueue(new retrofit2.Callback<NewsModel>() {
+        IRetrofitApiFetchTest.iRetrofitApiFetch.getArticles(q.toLowerCase(), "2022-06-15", "2022-07-07", "popularity", "10", "1").enqueue(new retrofit2.Callback<NewsModel>() {
 
             @Override
             public void onResponse(retrofit2.Call<NewsModel> call, retrofit2.Response<NewsModel> response) {
