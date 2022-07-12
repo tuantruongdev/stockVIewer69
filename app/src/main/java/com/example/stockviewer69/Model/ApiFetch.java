@@ -2,36 +2,28 @@ package com.example.stockviewer69.Model;
 
 import static android.content.ContentValues.TAG;
 
-import android.os.AsyncTask;
 import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
 
 import com.example.stockviewer69.Fragment.FeaturesFragment;
 import com.example.stockviewer69.Fragment.home;
+import com.example.stockviewer69.utils.Const;
 import com.example.stockviewer69.StockViewActivity;
 import com.google.gson.Gson;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
-import java.net.URL;
-import java.util.ArrayList;
 
 import okhttp3.Call;
 import okhttp3.Callback;
-import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
-import okhttp3.RequestBody;
 import okhttp3.Response;
-import okio.BufferedSink;
 
 public class ApiFetch {
-    final String stringEndPoint = "https://api.coingecko.com/api/v3/";
     final OkHttpClient client = new OkHttpClient();
 
     public ApiFetch() throws MalformedURLException {
@@ -40,7 +32,7 @@ public class ApiFetch {
 
     public void sendRequest(String path, String method, FeaturesFragment featuresFragment, String symbol, String shortSymbol, String stockId) throws IOException {
         path = path.replace("{id}", stockId);
-        Request rq = new Request.Builder().url(stringEndPoint + path)
+        Request rq = new Request.Builder().url(Const.COINGECKO_API_URL + path)
                 .build();
 
         client.newCall(rq).enqueue(new Callback() {

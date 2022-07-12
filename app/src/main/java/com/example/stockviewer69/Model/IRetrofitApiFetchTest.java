@@ -1,5 +1,6 @@
 package com.example.stockviewer69.Model;
 
+import com.example.stockviewer69.utils.Const;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -12,11 +13,9 @@ import retrofit2.http.Query;
 
 public interface IRetrofitApiFetchTest
 {
-    final String stringEndPoint="https://api.coingecko.com/api/v3/";
-    final String stringArticleEndPoint="https://newsapi.org/v2/";
-    Gson gson= new GsonBuilder().setDateFormat("dd-MM-yyy").create();
-    IRetrofitApiFetchTest iRetrofitApiFetch=new Retrofit.Builder().baseUrl(stringArticleEndPoint)
 
+    Gson gson= new GsonBuilder().setDateFormat("dd-MM-yyy").create();
+    IRetrofitApiFetchTest iRetrofitApiFetch=new Retrofit.Builder().baseUrl(Const.NEWS_API_URL)
             .addConverterFactory(GsonConverterFactory.create(gson))
             .build()
             .create(IRetrofitApiFetchTest.class);
