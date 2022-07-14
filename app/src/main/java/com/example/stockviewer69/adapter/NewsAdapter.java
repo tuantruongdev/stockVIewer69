@@ -10,7 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.stockviewer69.R;
-import com.example.stockviewer69.controller.activity.WebviewActivity;
+import com.example.stockviewer69.activity.WebviewActivity;
 import com.example.stockviewer69.model.entity.NewsModel;
 import com.example.stockviewer69.utils.Const;
 

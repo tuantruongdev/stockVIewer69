@@ -1,23 +1,21 @@
-package com.example.stockviewer69.controller.activity;
+package com.example.stockviewer69.activity;
 
 import static android.content.ContentValues.TAG;
 
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.MenuItem;
 import android.view.Window;
 import android.view.WindowManager;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
 import com.example.stockviewer69.R;
-import com.example.stockviewer69.controller.fragment.DetailFragment;
-import com.example.stockviewer69.controller.fragment.HomeFragment;
-import com.example.stockviewer69.controller.fragment.OtherFragment;
+import com.example.stockviewer69.fragment.DetailFragment;
+import com.example.stockviewer69.fragment.HomeFragment;
+import com.example.stockviewer69.fragment.OtherFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class MainActivity extends AppCompatActivity {

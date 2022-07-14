@@ -1,4 +1,4 @@
-package com.example.stockviewer69.controller.activity;
+package com.example.stockviewer69.activity;
 
 import static android.content.ContentValues.TAG;
 import static com.example.stockviewer69.model.IRetrofitApiFetch.gson;
@@ -51,8 +51,10 @@ public class StockViewActivity extends AppCompatActivity implements MainStockAda
     private final long TIME_OF_DAY = 86400;
     private final long TIME_OF_HOUR = 3600;
 
+    ArrayList<NewsModel.Article> news = new ArrayList<>();
+
     ImageView back, stockIcon;
-    TextView stockShortName, tvStockFullName, stockPrice, stockGain, marketCap, fullyDilCap, s24hHigh, s24hLow, totalMaxSupply, marketRank, ath, atl, marketRank2,
+    TextView stockShortName, stockFullName, stockPrice, stockGain, marketCap, fullyDilCap, s24hHigh, s24hLow, totalMaxSupply, marketRank, ath, atl, marketRank2,
             s1h, s24h, s7d, s30d, s90d, s1y, sAt;
     LineChart lineChart;
     LinearLayout gainLayout;
@@ -60,7 +62,6 @@ public class StockViewActivity extends AppCompatActivity implements MainStockAda
     OverViewStockModel overViewStockModel;
     RecyclerView newsRecyclerView;
     NewsAdapter newsAdapter;
-    ArrayList<NewsModel.Article> news = new ArrayList<>();
 
     public void starter(Context context, OverViewStockModel o) {
         Intent intent = new Intent(context, StockViewActivity.class);
@@ -90,7 +91,7 @@ public class StockViewActivity extends AppCompatActivity implements MainStockAda
 
         back = findViewById(R.id.back);
         stockShortName = findViewById(R.id.stockShortName);
-        tvStockFullName = findViewById(R.id.stockFullName);
+        stockFullName = findViewById(R.id.stockFullName);
         stockPrice = findViewById(R.id.stockPrice);
         lineChart = findViewById(R.id.lineChart);
         stockGain = findViewById(R.id.stockGain);
@@ -129,6 +130,26 @@ public class StockViewActivity extends AppCompatActivity implements MainStockAda
         overridePendingTransition(R.anim.slide_nothin, R.anim.slide_out);
     }
 
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.stats1h:
+                clickChangeTime(TIME_OF_HOUR, (TextView) v);
+            case R.id.stats24h:
+                clickChangeTime(DAY * TIME_OF_DAY, (TextView) v);
+            case R.id.stats7d:
+                clickChangeTime(WEEK * TIME_OF_DAY, (TextView) v);
+            case R.id.stats30d:
+                clickChangeTime(MONTH * TIME_OF_DAY, (TextView) v);
+            case R.id.stats90d:
+                clickChangeTime(THREE_MONTH * TIME_OF_DAY, (TextView) v);
+            case R.id.stats1y:
+                clickChangeTime(YEAR * TIME_OF_DAY, (TextView) v);
+
+
+        }
+
+    }
     ///????????
     @Override
     public void setImageWithGlide(String url, int type, ImageView stockIcon) {
@@ -182,7 +203,7 @@ public class StockViewActivity extends AppCompatActivity implements MainStockAda
     private void initial() {
         Intent intent = getIntent();
         stockShortName.setText(intent.getStringExtra("stockShortName"));
-        tvStockFullName.setText(intent.getStringExtra("stockFullName"));
+        stockFullName.setText(intent.getStringExtra("stockFullName"));
         stockPrice.setText(intent.getStringExtra("stockPrice"));
         stockGainScore = intent.getDoubleExtra("stockGain", 0);
         String stockMarketChart = intent.getStringExtra("stockMarketChart");
@@ -338,24 +359,5 @@ public class StockViewActivity extends AppCompatActivity implements MainStockAda
         //lineChart.getAxisRight().setDrawAxisLine(false);
     }
 
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()){
-            case R.id.stats1h:
-                clickChangeTime(TIME_OF_HOUR, (TextView) v);
-            case R.id.stats24h:
-                clickChangeTime(DAY * TIME_OF_DAY, (TextView) v);
-            case R.id.stats7d:
-                clickChangeTime(WEEK * TIME_OF_DAY, (TextView) v);
-            case R.id.stats30d:
-                clickChangeTime(MONTH * TIME_OF_DAY, (TextView) v);
-            case R.id.stats90d:
-                clickChangeTime(THREE_MONTH * TIME_OF_DAY, (TextView) v);
-            case R.id.stats1y:
-                clickChangeTime(YEAR * TIME_OF_DAY, (TextView) v);
 
-
-        }
-
-    }
 }

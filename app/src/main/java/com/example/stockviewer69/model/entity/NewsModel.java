@@ -54,6 +54,7 @@ public class NewsModel {
         public String urlToImage;
         public String publishedAt;
         public String content;
+
         public Article(Source source, String author, String title, String description, String url, String urlToImage, String publishedAt, String content) {
             this.source = source;
             this.author = author;
@@ -70,19 +71,12 @@ public class NewsModel {
                 SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
                 Date past = format.parse(this.publishedAt);
                 Date current = new Date();
-
                 return current.getTime() / 1000 - past.getTime() / 1000;
-//                Date now = new Date();
-//                System.out.println(TimeUnit.MILLISECONDS.toMillis(now.getTime() - past.getTime()) + " milliseconds ago");
-//                System.out.println(TimeUnit.MILLISECONDS.toMinutes(now.getTime() - past.getTime()) + " minutes ago");
-//                System.out.println(TimeUnit.MILLISECONDS.toHours(now.getTime() - past.getTime()) + " hours ago");
-//                System.out.println(TimeUnit.MILLISECONDS.toDays(now.getTime() - past.getTime()) + " days ago");
             } catch (Exception j) {
                 j.printStackTrace();
             }
             return Long.valueOf(0);
         }
-
 
         public String toDuration() {
             List<Long> times = new ArrayList<>();
@@ -124,6 +118,7 @@ public class NewsModel {
     public static class Source {
         public String id;
         public String name;
+
         public Source(String id, String name) {
             this.id = id;
             this.name = name;

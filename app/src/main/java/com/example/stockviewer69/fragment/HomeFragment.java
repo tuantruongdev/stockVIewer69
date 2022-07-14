@@ -1,4 +1,4 @@
-package com.example.stockviewer69.controller.fragment;
+package com.example.stockviewer69.fragment;
 
 import static android.content.ContentValues.TAG;
 

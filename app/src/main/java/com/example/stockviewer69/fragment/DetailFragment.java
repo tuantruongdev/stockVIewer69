@@ -1,4 +1,4 @@
-package com.example.stockviewer69.controller.fragment;
+package com.example.stockviewer69.fragment;
 
 import android.os.Bundle;
 
@@ -15,7 +15,6 @@ public class DetailFragment extends Fragment {
     public DetailFragment() {
         // Required empty public constructor
     }
-
 
     @Override
     public void onCreate(Bundle savedInstanceState) {

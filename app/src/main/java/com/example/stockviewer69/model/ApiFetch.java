@@ -8,9 +8,9 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 
-import com.example.stockviewer69.controller.activity.StockViewActivity;
-import com.example.stockviewer69.controller.fragment.FeatureFragment;
-import com.example.stockviewer69.controller.fragment.HomeFragment;
+import com.example.stockviewer69.activity.StockViewActivity;
+import com.example.stockviewer69.fragment.FeatureFragment;
+import com.example.stockviewer69.fragment.HomeFragment;
 import com.example.stockviewer69.model.entity.MarketChartModel;
 import com.example.stockviewer69.model.entity.NewsModel;
 import com.example.stockviewer69.model.entity.OverViewStockModel;
@@ -21,6 +21,8 @@ import com.google.gson.Gson;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -32,7 +34,6 @@ public class ApiFetch {
     final OkHttpClient client = new OkHttpClient();
 
     public ApiFetch() throws MalformedURLException {
-
     }
 
     public void sendRequest(String path, String method, FeatureFragment featuresFragment, String symbol, String shortSymbol, String stockId) throws IOException {
@@ -69,15 +70,13 @@ public class ApiFetch {
         IRetrofitApiFetch.iRetrofitApiFetch.getCharts(id, currency, from, to).enqueue(new retrofit2.Callback<MarketChartModel>() {
             @Override
             public void onResponse(retrofit2.Call<MarketChartModel> call, retrofit2.Response<MarketChartModel> response) {
-
-                    stockViewActivity.updateMarketChartByTime(response.body());
-
-                //disabled due unused
+                stockViewActivity.updateMarketChartByTime(response.body());
+                //no longer disabled
             }
 
             @Override
             public void onFailure(retrofit2.Call<MarketChartModel> call, Throwable t) {
-
+                Log.e(TAG, "onFailure: get chart data failed");
             }
         });
     }
@@ -86,7 +85,6 @@ public class ApiFetch {
         IRetrofitApiFetch.iRetrofitApiFetch.getStockMarketData(id).enqueue(new retrofit2.Callback<StockMarketData>() {
             @Override
             public void onResponse(retrofit2.Call<StockMarketData> call, retrofit2.Response<StockMarketData> response) {
-
                 stockViewActivity.updateMarketData(response.body());
             }
 
@@ -103,7 +101,7 @@ public class ApiFetch {
 
             @Override
             public void onResponse(retrofit2.Call<NewsModel> call, retrofit2.Response<NewsModel> response) {
-                Log.d(TAG, "onResponse:"+response.body() );
+                Log.d(TAG, "onResponse:" + response.body());
                 stockViewActivity.updateListNews(response.body().getArticles());
             }
 
@@ -114,8 +112,9 @@ public class ApiFetch {
     }
 
     public void getMainArticle(HomeFragment featureFragment) {
-        IRetrofitApiFetchTest.iRetrofitApiFetch.getArticles("crypto", "2022-06-15", "2022-07-07", "publishedAt", "15", "1").enqueue(new retrofit2.Callback<NewsModel>() {
-
+        String currentDate=getDateAgoByTimeStamp(0);
+        String targetDate=getDateAgoByTimeStamp(30);
+        IRetrofitApiFetchTest.iRetrofitApiFetch.getArticles("crypto", targetDate, currentDate, "publishedAt", "15", "1").enqueue(new retrofit2.Callback<NewsModel>() {
             @Override
             public void onResponse(retrofit2.Call<NewsModel> call, retrofit2.Response<NewsModel> response) {
                 featureFragment.updateListNews(response.body().getArticles());
@@ -126,11 +125,13 @@ public class ApiFetch {
 
             }
         });
-
-
     }
 
-    ;
-
-
+    private String getDateAgoByTimeStamp(int day){
+        Date curDate = new Date();
+        Date newDate = new Date(curDate.getTime() - (day * 24 * 3600 * 1000));
+        SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");
+        String currentDateString=  sdf.format(newDate);
+        return currentDateString;
+    }
 }
