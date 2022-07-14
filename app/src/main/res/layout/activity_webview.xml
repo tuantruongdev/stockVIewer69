@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Controller.Activity.WebviewActivity"
+    tools:context=".controller.activity.WebviewActivity"
     android:orientation="vertical">
     <RelativeLayout
         android:id="@+id/layoutToolBar"
@@ -14,7 +14,7 @@
     android:layout_marginTop="10dp">
 
         <ImageView
-            android:id="@+id/ivBackBtnWebView"
+            android:id="@+id/back"
             android:layout_width="25dp"
             android:layout_height="25dp"
             android:layout_centerVertical="true"
@@ -32,7 +32,7 @@
 
 
         <TextView
-            android:id="@+id/tvUrl"
+            android:id="@+id/url"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="3dp"

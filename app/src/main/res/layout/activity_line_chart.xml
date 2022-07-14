@@ -6,15 +6,14 @@
     android:layout_marginRight="7dp"
     android:layout_marginBottom="20dp"
     app:cardCornerRadius="20dp"
-
     app:cardBackgroundColor="@color/white"
     xmlns:android="http://schemas.android.com/apk/res/android">
+
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_marginBottom="10dp"
     android:layout_width="140dp"
-
     android:layout_height="120dp"
     tools:context=".LineChartActivity">
 
@@ -24,22 +23,20 @@
         android:layout_height="74dp">
 
         <ImageView
-            android:id="@+id/ivStockImage"
+            android:id="@+id/stockImage"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_centerVertical="true"
             android:layout_marginLeft="10dp"
             android:src="@mipmap/default_coin" />
 
-
         <TextView
             android:layout_marginTop="3dp"
-            android:id="@+id/tvStockShortName"
+            android:id="@+id/stockShortName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/ivStockImage"
+            android:layout_below="@id/stockImage"
             android:layout_centerVertical="true"
-
             android:layout_marginLeft="10dp"
             android:text="APPL"
             android:textColor="@color/black"
@@ -52,11 +49,10 @@
             android:layout_height="50dp"
             android:layout_centerVertical="true"
             android:layout_marginLeft="-5dp"
-            android:layout_toRightOf="@id/ivStockImage" />
+            android:layout_toRightOf="@id/stockImage" />
     </RelativeLayout>
 
     <LinearLayout
-
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/stockOverView"
@@ -70,7 +66,7 @@
             android:layout_weight="1">
 
             <ImageView
-                android:id="@+id/ivArrow"
+                android:id="@+id/arrow"
                 android:layout_width="20dp"
                 android:layout_height="20dp"
                 android:layout_gravity="center"
@@ -80,7 +76,7 @@
                 android:src="@drawable/ic_baseline_arrow_drop_up_24" />
 
             <TextView
-                android:id="@+id/tvStockGain"
+                android:id="@+id/stockGain"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -99,7 +95,7 @@
             android:layout_weight="1">
 
             <TextView
-                android:id="@+id/tvStockPrice"
+                android:id="@+id/stockPrice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -112,6 +108,5 @@
 
 
     </LinearLayout>
-
 </RelativeLayout>
 </com.google.android.material.card.MaterialCardView>

@@ -5,23 +5,19 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-
     android:background="#121212"
-    tools:context=".Controller.Activity.MainActivity">
+    tools:context=".controller.activity.MainActivity">
 
     <RelativeLayout
-
         android:id="@+id/action_bar"
         android:layout_width="match_parent"
         android:layout_height="65dp">
-
 
         <ImageView
             android:id="@+id/logoCMC"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_centerVertical="true"
-
             android:layout_marginLeft="25dp"
             android:src="@mipmap/cmc_logo_white" />
 
@@ -46,38 +42,26 @@
             android:showDividers="middle">
 
             <ImageView
-
-                android:id="@+id/ivIconSearch"
+                android:id="@+id/iconSearch"
                 android:layout_width="28dp"
                 android:layout_height="28dp"
                 android:layout_centerVertical="true"
-
-
                 android:layout_weight="1"
                 android:src="@drawable/ic_baseline_search_24" />
 
             <ImageView
 
-                android:id="@+id/ivIconBell"
+                android:id="@+id/iconBell"
                 android:layout_width="28dp"
                 android:layout_height="28dp"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="15dp"
-
                 android:layout_weight="1"
                 android:src="@drawable/ic_baseline_notifications_none_24" />
 
         </LinearLayout>
-
     </RelativeLayout>
 
-    <!--   <fragment-->
-    <!--       android:id="@+id/frTopStock"-->
-    <!--       android:layout_below="@+id/action_bar"-->
-    <!--       android:layout_width="match_parent"-->
-    <!--       android:layout_height="wrap_content"-->
-    <!--       class="com.example.stockviewer69.Controller.Fragment.FeaturesFragment"-->
-    <!--       />-->
     <androidx.cardview.widget.CardView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -90,57 +74,37 @@
             android:id="@+id/swipeRefreshLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            >
+            android:layout_marginTop="20dp">
+
             <ScrollView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content">
 
-
-            <RelativeLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
-
                 <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
 
-                    android:id="@+id/fragment_container"
-                    android:layout_width="match_parent"
-                    android:layout_height="200dp"
+                    <RelativeLayout
+                        android:id="@+id/fragmentContainer"
+                        android:layout_width="match_parent"
+                        android:layout_height="200dp"></RelativeLayout>
 
+                    <RelativeLayout
+                        android:id="@+id/fragmentContainerGainerLoser"
+                        android:layout_width="match_parent"
+                        android:layout_height="200dp"
+                        android:layout_below="@+id/fragmentContainer"></RelativeLayout>
 
-                    >
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/newsRecycleViewMain"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/fragmentContainerGainerLoser"
+                        android:layout_margin="15dp"
+                        tools:listitem="@layout/news_items"></androidx.recyclerview.widget.RecyclerView>
 
                 </RelativeLayout>
-
-                <RelativeLayout
-
-                    android:id="@+id/fragment_container_gainer_loser"
-                    android:layout_width="match_parent"
-                    android:layout_height="200dp"
-                    android:layout_below="@+id/fragment_container">
-
-                </RelativeLayout>
-
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:layout_margin="15dp"
-                    android:id="@+id/newsRecycleViewMain"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/fragment_container_gainer_loser"
-                    tools:listitem="@layout/news_items">
-
-                </androidx.recyclerview.widget.RecyclerView>
-
-            </RelativeLayout>
-
-
             </ScrollView>
-
         </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
     </androidx.cardview.widget.CardView>
-
-
-
-
 </RelativeLayout>
