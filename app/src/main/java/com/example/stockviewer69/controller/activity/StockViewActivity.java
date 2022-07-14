@@ -42,7 +42,7 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Locale;
 
-public class StockViewActivity extends AppCompatActivity implements MainStockAdapter.ICallBackMain {
+public class StockViewActivity extends AppCompatActivity implements MainStockAdapter.ICallBackMain,View.OnClickListener {
     private final int DAY = 1;
     private final int WEEK = 7;
     private final int MONTH = 30;
@@ -121,7 +121,6 @@ public class StockViewActivity extends AppCompatActivity implements MainStockAda
 
         bind();
         initial();
-
     }
 
     @Override
@@ -147,18 +146,17 @@ public class StockViewActivity extends AppCompatActivity implements MainStockAda
 
     private void bind() {
         back.setOnClickListener(v -> onBackPressed());
-        s1h.setOnClickListener(onClickListener(TIME_OF_HOUR, s1h));
-        s24h.setOnClickListener(onClickListener(DAY * TIME_OF_DAY, s24h));
-        s7d.setOnClickListener(onClickListener(WEEK * TIME_OF_DAY, s7d));
-        s30d.setOnClickListener(onClickListener(MONTH * TIME_OF_DAY, s30d));
-        s90d.setOnClickListener(onClickListener(THREE_MONTH * TIME_OF_DAY, s90d));
-        s1y.setOnClickListener(onClickListener(YEAR * TIME_OF_DAY, s1y));
+        s1h.setOnClickListener(this);
+        s24h.setOnClickListener(this);
+        s7d.setOnClickListener(this);
+        s30d.setOnClickListener(this);
+        s90d.setOnClickListener(this);
+        s1y.setOnClickListener(this);
     }
 
-    private View.OnClickListener onClickListener(Long time, TextView tvTime) {
+    private void clickChangeTime(Long time, TextView tvTime) {
         Intent intent = getIntent();
 
-        return v -> {
             try {
                 ApiFetch apiFetch = new ApiFetch();
                 apiFetch.getMarketChartData(intent.getStringExtra("stockId"), "usd", String.valueOf(System.currentTimeMillis() / 1000 - 1000 - time), this);
@@ -168,7 +166,7 @@ public class StockViewActivity extends AppCompatActivity implements MainStockAda
             } catch (Exception e) {
                 e.printStackTrace();
             }
-        };
+
     }
 
     private void resetTimeBtn() {
@@ -340,5 +338,24 @@ public class StockViewActivity extends AppCompatActivity implements MainStockAda
         //lineChart.getAxisRight().setDrawAxisLine(false);
     }
 
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.stats1h:
+                clickChangeTime(TIME_OF_HOUR, (TextView) v);
+            case R.id.stats24h:
+                clickChangeTime(DAY * TIME_OF_DAY, (TextView) v);
+            case R.id.stats7d:
+                clickChangeTime(WEEK * TIME_OF_DAY, (TextView) v);
+            case R.id.stats30d:
+                clickChangeTime(MONTH * TIME_OF_DAY, (TextView) v);
+            case R.id.stats90d:
+                clickChangeTime(THREE_MONTH * TIME_OF_DAY, (TextView) v);
+            case R.id.stats1y:
+                clickChangeTime(YEAR * TIME_OF_DAY, (TextView) v);
 
+
+        }
+
+    }
 }
