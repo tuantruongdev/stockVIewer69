@@ -26,7 +26,9 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.example.stockviewer69.R;
 import com.example.stockviewer69.adapter.MainStockAdapter;
 import com.example.stockviewer69.adapter.NewsAdapter;
+import com.example.stockviewer69.controller.StockViewController;
 import com.example.stockviewer69.model.ApiFetch;
+import com.example.stockviewer69.model.ICallBackUpdate;
 import com.example.stockviewer69.model.entity.MarketChartModel;
 import com.example.stockviewer69.model.entity.NewsModel;
 import com.example.stockviewer69.model.entity.OverViewStockModel;
@@ -42,7 +44,7 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Locale;
 
-public class StockViewActivity extends AppCompatActivity implements MainStockAdapter.ICallBackMain,View.OnClickListener {
+public class StockViewActivity extends AppCompatActivity implements MainStockAdapter.ICallBackMain,View.OnClickListener, ICallBackUpdate {
     private final int DAY = 1;
     private final int WEEK = 7;
     private final int MONTH = 30;
@@ -50,8 +52,6 @@ public class StockViewActivity extends AppCompatActivity implements MainStockAda
     private final int YEAR = 365;
     private final long TIME_OF_DAY = 86400;
     private final long TIME_OF_HOUR = 3600;
-
-    ArrayList<NewsModel.Article> news = new ArrayList<>();
 
     ImageView back, stockIcon;
     TextView stockShortName, stockFullName, stockPrice, stockGain, marketCap, fullyDilCap, s24hHigh, s24hLow, totalMaxSupply, marketRank, ath, atl, marketRank2,
@@ -62,6 +62,8 @@ public class StockViewActivity extends AppCompatActivity implements MainStockAda
     OverViewStockModel overViewStockModel;
     RecyclerView newsRecyclerView;
     NewsAdapter newsAdapter;
+    StockViewController stockViewController;
+
 
     public void starter(Context context, OverViewStockModel o) {
         Intent intent = new Intent(context, StockViewActivity.class);
@@ -115,11 +117,11 @@ public class StockViewActivity extends AppCompatActivity implements MainStockAda
         sAt = findViewById(R.id.statsAt);
 
         newsRecyclerView = findViewById(R.id.newsRecycleView);
-        newsAdapter = new NewsAdapter(news, this);
+        newsAdapter = new NewsAdapter(new ArrayList<NewsModel.Article>() , this);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(StockViewActivity.this);
         newsRecyclerView.setAdapter(newsAdapter);
         newsRecyclerView.setLayoutManager(linearLayoutManager);
-
+        stockViewController= new StockViewController(this);
         bind();
         initial();
     }
@@ -145,10 +147,7 @@ public class StockViewActivity extends AppCompatActivity implements MainStockAda
                 clickChangeTime(THREE_MONTH * TIME_OF_DAY, (TextView) v);
             case R.id.stats1y:
                 clickChangeTime(YEAR * TIME_OF_DAY, (TextView) v);
-
-
         }
-
     }
     ///????????
     @Override
@@ -163,6 +162,34 @@ public class StockViewActivity extends AppCompatActivity implements MainStockAda
                 .placeholder(R.mipmap.default_coin)
                 .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
                 .into(stockIcon);
+    }
+
+    @Override
+    public void updateStockMarketData(StockMarketData stockMarketData) {
+        marketCap.setText(truncateNumber(stockMarketData.market_data.market_cap.usd) + " $");
+        fullyDilCap.setText(truncateNumber(stockMarketData.market_data.fully_diluted_valuation.usd) + " $");
+        ath.setText(stockMarketData.market_data.ath.usd + " $");
+        atl.setText(stockMarketData.market_data.atl.usd + " $");
+        s24hHigh.setText(stockMarketData.market_data.high_24h.usd + " $");
+        s24hLow.setText(stockMarketData.market_data.low_24h.usd + " $");
+        marketRank.setText("#" + stockMarketData.market_data.market_cap_rank);
+        marketRank2.setText("#" + stockMarketData.market_data.market_cap_rank);
+        totalMaxSupply.setText(truncateNumber(stockMarketData.market_data.total_supply));
+        Glide.with(StockViewActivity.this).load(stockMarketData.image.large
+                        .toLowerCase(Locale.ROOT) + "/200")
+                .placeholder(R.mipmap.default_coin)
+                .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
+                .into(stockIcon);
+    }
+
+    @Override
+    public void updateNews(ArrayList<NewsModel.Article> article) {
+        // news=article;
+        for (int i = 0; i < article.size() - 1; i++) {
+            newsAdapter.addNews(article.get(i));
+            Log.d(TAG, "updateListNews: " + article.get(i).title);
+        }
+        newsAdapter.notifyDataSetChanged();
     }
 
     private void bind() {
@@ -181,13 +208,11 @@ public class StockViewActivity extends AppCompatActivity implements MainStockAda
             try {
                 ApiFetch apiFetch = new ApiFetch();
                 apiFetch.getMarketChartData(intent.getStringExtra("stockId"), "usd", String.valueOf(System.currentTimeMillis() / 1000 - 1000 - time), this);
-
                 resetTimeBtn();
                 tvTime.setBackground(getDrawable(R.drawable.card_view_bg_pure));
             } catch (Exception e) {
                 e.printStackTrace();
             }
-
     }
 
     private void resetTimeBtn() {
@@ -214,34 +239,10 @@ public class StockViewActivity extends AppCompatActivity implements MainStockAda
             gainLayout.setBackground(getDrawable(R.drawable.card_view_bg_green));
         }
         stockGain.setText(stockGainScore + "%");
-        try {
-            ApiFetch apiFetch = new ApiFetch();
-            //  apiFetch.getMarketChartData(intent.getStringExtra("stockId"),"usd",this);
-            apiFetch.getMarketData(intent.getStringExtra("stockId"), this);
-            apiFetch.getArticle(overViewStockModel.getStockFullName(), this);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+
+        stockViewController.getNews(intent.getStringExtra("stockFullName"));
+        stockViewController.getMarketData(intent.getStringExtra("stockId"));
     }
-
-    public void updateMarketData(StockMarketData stockMarketData) {
-        marketCap.setText(truncateNumber(stockMarketData.market_data.market_cap.usd) + " $");
-        fullyDilCap.setText(truncateNumber(stockMarketData.market_data.fully_diluted_valuation.usd) + " $");
-        ath.setText(stockMarketData.market_data.ath.usd + " $");
-        atl.setText(stockMarketData.market_data.atl.usd + " $");
-        s24hHigh.setText(stockMarketData.market_data.high_24h.usd + " $");
-        s24hLow.setText(stockMarketData.market_data.low_24h.usd + " $");
-        marketRank.setText("#" + stockMarketData.market_data.market_cap_rank);
-        marketRank2.setText("#" + stockMarketData.market_data.market_cap_rank);
-        totalMaxSupply.setText(truncateNumber(stockMarketData.market_data.total_supply));
-        Glide.with(StockViewActivity.this).load(stockMarketData.image.large
-                        .toLowerCase(Locale.ROOT) + "/200")
-                .placeholder(R.mipmap.default_coin)
-                .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
-                .into(stockIcon);
-
-    }
-
     public String truncateNumber(double floatNumber) {
         long million = 1000000L;
         long billion = 1000000000L;
@@ -323,14 +324,7 @@ public class StockViewActivity extends AppCompatActivity implements MainStockAda
         }
     }
 
-    public void updateListNews(ArrayList<NewsModel.Article> article) {
-        // news=article;
-        for (int i = 0; i < article.size() - 1; i++) {
-            news.add(article.get(i));
-            Log.d(TAG, "updateListNews: " + article.get(i).title);
-        }
-        newsAdapter.notifyDataSetChanged();
-    }
+
 
     void modifyLineChart(LineChart lineChart) {
         lineChart.setNoDataText("No data available");
@@ -358,6 +352,7 @@ public class StockViewActivity extends AppCompatActivity implements MainStockAda
         lineChart.getAxisRight().setDrawLabels(false);
         //lineChart.getAxisRight().setDrawAxisLine(false);
     }
+
 
 
 }

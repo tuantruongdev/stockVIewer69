@@ -9,6 +9,7 @@ import android.util.Log;
 import androidx.annotation.NonNull;
 
 import com.example.stockviewer69.activity.StockViewActivity;
+import com.example.stockviewer69.controller.StockViewController;
 import com.example.stockviewer69.fragment.FeatureFragment;
 import com.example.stockviewer69.fragment.HomeFragment;
 import com.example.stockviewer69.model.entity.MarketChartModel;
@@ -81,11 +82,12 @@ public class ApiFetch {
         });
     }
 
-    public void getMarketData(String id, StockViewActivity stockViewActivity) {
+    public void getMarketData(String id, ICallBackUpdate iCallBackUpdate) {
         IRetrofitApiFetch.iRetrofitApiFetch.getStockMarketData(id).enqueue(new retrofit2.Callback<StockMarketData>() {
             @Override
             public void onResponse(retrofit2.Call<StockMarketData> call, retrofit2.Response<StockMarketData> response) {
-                stockViewActivity.updateMarketData(response.body());
+          //      stockViewActivity.updateMarketData(response.body());
+                iCallBackUpdate.updateStockMarketData(response.body());
             }
 
             @Override
@@ -95,14 +97,14 @@ public class ApiFetch {
         });
     }
 
-    public void getArticle(String q, StockViewActivity stockViewActivity) {
+    public void getArticle(String q, ICallBackUpdate iCallBackUpdate) {
         Log.d(TAG, "getArticle: " + q.toLowerCase());
         IRetrofitApiFetchTest.iRetrofitApiFetch.getArticles(q.toLowerCase(), "2022-06-15", "2022-07-07", "popularity", "10", "1").enqueue(new retrofit2.Callback<NewsModel>() {
 
             @Override
             public void onResponse(retrofit2.Call<NewsModel> call, retrofit2.Response<NewsModel> response) {
                 Log.d(TAG, "onResponse:" + response.body());
-                stockViewActivity.updateListNews(response.body().getArticles());
+                iCallBackUpdate.updateNews(response.body().getArticles());
             }
 
             @Override

@@ -20,6 +20,7 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> {
 
     MainStockAdapter.ICallBackMain mListener;
     private ArrayList<NewsModel.Article> listNews;
+
     private LayoutInflater layoutInflater;
 
     public NewsAdapter(ArrayList<NewsModel.Article> listNews, MainStockAdapter.ICallBackMain mListener) {
@@ -51,6 +52,18 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> {
         return listNews.size();
     }
 
+    public ArrayList<NewsModel.Article> getAllNews(){
+        return this.listNews;
+    }
+    public void setAllNews(ArrayList<NewsModel.Article> news){
+        this.listNews=news;
+    }
+    public void addNews(NewsModel.Article article){
+        this.listNews.add(article);
+    }
+
+
+
     NewsModel.Article getItem(int i) {
         return listNews.get(i);
     }
@@ -76,6 +89,7 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> {
         public void setItemClickListener(MainStockAdapter.ItemClickListener itemClickListener) {
             this.itemClickListener = itemClickListener;
         }
+
     }
 }
 
