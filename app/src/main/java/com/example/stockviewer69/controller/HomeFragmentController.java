@@ -7,12 +7,12 @@ import com.example.stockviewer69.model.entity.NewsModel;
 import java.net.MalformedURLException;
 import java.util.ArrayList;
 
-public class StockViewController {
-    ArrayList<NewsModel.Article> news = new ArrayList<>();
-    ICallBackUpdate iCallBackUpdate;
+public class HomeFragmentController {
     ApiFetch apiFetch;
+    ArrayList<NewsModel.Article> news = new ArrayList<>(); //in case store data in controller instead of adapter
+    ICallBackUpdate iCallBackUpdate;
 
-    public StockViewController(ICallBackUpdate iCallBackUpdate) {
+    public HomeFragmentController(ICallBackUpdate iCallBackUpdate) {
         this.iCallBackUpdate = iCallBackUpdate;
     }
 
@@ -24,16 +24,8 @@ public class StockViewController {
         }
     }
 
-    public void getMarketData(String stockId) {
-        //  apiFetch.getMarketChartData(intent.getStringExtra("stockId"),"usd",this);
-        apiFetch.getMarketData(stockId, iCallBackUpdate);
-
-    }
-
     public void getNews(String stockFullName) {
         //  apiFetch.getMarketChartData(intent.getStringExtra("stockId"),"usd",this);
-        apiFetch.getArticle(stockFullName, iCallBackUpdate);
-
+        apiFetch.getMainArticle(stockFullName, iCallBackUpdate);
     }
-
 }

@@ -11,9 +11,9 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.stockviewer69.R;
-import com.example.stockviewer69.activity.StockViewActivity;
 import com.example.stockviewer69.model.entity.OverViewStockModel;
 import com.example.stockviewer69.utils.Const;
+import com.example.stockviewer69.view.activity.StockViewActivity;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
@@ -81,6 +81,14 @@ public class MainStockAdapter extends RecyclerView.Adapter<MainStockAdapter.View
         return stockData.get(i);
     }
 
+    public void clearStock() {
+        this.stockData.clear();
+    }
+
+    public void addStock(OverViewStockModel o) {
+        this.stockData.add(o);
+    }
+
     void modifyLineChart(LineChart lineChart) {
         lineChart.setNoDataText("No data available");
 
@@ -113,8 +121,9 @@ public class MainStockAdapter extends RecyclerView.Adapter<MainStockAdapter.View
     }
 
     public interface ICallBackMain {
-        void setImageWithGlide(String url,int type, ImageView stockIcon);
+        void setImageWithGlide(String url, int type, ImageView stockIcon);
     }
+
     public interface ICallBackSetColor {
         int setLineColor(int drawable);
     }

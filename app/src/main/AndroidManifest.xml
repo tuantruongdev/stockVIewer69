@@ -16,13 +16,13 @@
         android:theme="@style/Theme.StockVIewer69"
         tools:targetApi="31">
         <activity
-            android:name=".activity.WebviewActivity"
+            android:name=".view.activity.WebviewActivity"
             android:exported="false" />
         <activity
-            android:name=".activity.StockViewActivity"
+            android:name=".view.activity.StockViewActivity"
             android:exported="false" />
         <activity
-            android:name=".activity.MainActivity"
+            android:name=".view.activity.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

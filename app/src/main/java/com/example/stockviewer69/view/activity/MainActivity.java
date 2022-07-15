@@ -1,4 +1,4 @@
-package com.example.stockviewer69.activity;
+package com.example.stockviewer69.view.activity;
 
 import static android.content.ContentValues.TAG;
 
@@ -13,9 +13,9 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
 import com.example.stockviewer69.R;
-import com.example.stockviewer69.fragment.DetailFragment;
-import com.example.stockviewer69.fragment.HomeFragment;
-import com.example.stockviewer69.fragment.OtherFragment;
+import com.example.stockviewer69.view.fragment.DetailFragment;
+import com.example.stockviewer69.view.fragment.HomeFragment;
+import com.example.stockviewer69.view.fragment.OtherFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class MainActivity extends AppCompatActivity {
@@ -31,7 +31,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         //bottom nav
-       navigation  = findViewById(R.id.navigation);
+        navigation = findViewById(R.id.navigation);
         if (Build.VERSION.SDK_INT >= 21) {
             Window window = getWindow();
             window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
@@ -54,21 +54,21 @@ public class MainActivity extends AppCompatActivity {
         bind();
     }
 
-    private void bind(){
-       navigation.setOnItemSelectedListener(item -> {
-           switch (item.getItemId()) {
-               case R.id.navigation_home:
-                   loadFragment(fragmentManager, homeFragment);
-                   return true;
-               case R.id.navigation_details:
-                   loadFragment(fragmentManager, detailFragment);
-                   return true;
-               case R.id.navigation_others:
-                   loadFragment(fragmentManager, otherFragment);
-                   return true;
-           }
-           return false;
-       });
+    private void bind() {
+        navigation.setOnItemSelectedListener(item -> {
+            switch (item.getItemId()) {
+                case R.id.navigation_home:
+                    loadFragment(fragmentManager, homeFragment);
+                    return true;
+                case R.id.navigation_details:
+                    loadFragment(fragmentManager, detailFragment);
+                    return true;
+                case R.id.navigation_others:
+                    loadFragment(fragmentManager, otherFragment);
+                    return true;
+            }
+            return false;
+        });
     }
 
     private void loadFragment(FragmentManager fm, Fragment targetFragment) {

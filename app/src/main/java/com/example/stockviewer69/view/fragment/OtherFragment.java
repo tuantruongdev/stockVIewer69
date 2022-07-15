@@ -1,4 +1,4 @@
-package com.example.stockviewer69.fragment;
+package com.example.stockviewer69.view.fragment;
 
 import android.os.Bundle;
 

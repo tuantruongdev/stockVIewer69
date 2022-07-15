@@ -8,16 +8,13 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 
-import com.example.stockviewer69.activity.StockViewActivity;
-import com.example.stockviewer69.controller.StockViewController;
-import com.example.stockviewer69.fragment.FeatureFragment;
-import com.example.stockviewer69.fragment.HomeFragment;
 import com.example.stockviewer69.model.entity.MarketChartModel;
 import com.example.stockviewer69.model.entity.NewsModel;
 import com.example.stockviewer69.model.entity.OverViewStockModel;
 import com.example.stockviewer69.model.entity.RawOverViewStockModel;
 import com.example.stockviewer69.model.entity.StockMarketData;
 import com.example.stockviewer69.utils.Const;
+import com.example.stockviewer69.view.activity.StockViewActivity;
 import com.google.gson.Gson;
 
 import java.io.IOException;
@@ -37,7 +34,8 @@ public class ApiFetch {
     public ApiFetch() throws MalformedURLException {
     }
 
-    public void sendRequest(String path, String method, FeatureFragment featuresFragment, String symbol, String shortSymbol, String stockId) throws IOException {
+    public void sendRequest(String path, String method, String symbol, String shortSymbol, String stockId, ICallBackUpdateFeature iCallBackUpdateFeature) throws IOException {
+        Log.d(TAG, "sendRequest: ");
         path = path.replace("{id}", stockId);
         Request rq = new Request.Builder().url(Const.COINGECKO_API_URL + path)
                 .build();
@@ -58,7 +56,8 @@ public class ApiFetch {
                     new Handler(Looper.getMainLooper()).post(new Runnable() {
                         @Override
                         public void run() {
-                            featuresFragment.updateList(new OverViewStockModel(shortSymbol, symbol, stockId, 20, 396001, RawOverViewStockModel.convertToDetailStockModel(rq)));
+                            Log.d(TAG, "run1337: " + stockId);
+                            iCallBackUpdateFeature.updateStockMarketData(new OverViewStockModel(shortSymbol, symbol, stockId, 20, 396001, RawOverViewStockModel.convertToDetailStockModel(rq)));
                         }
                     });
                 }
@@ -86,7 +85,7 @@ public class ApiFetch {
         IRetrofitApiFetch.iRetrofitApiFetch.getStockMarketData(id).enqueue(new retrofit2.Callback<StockMarketData>() {
             @Override
             public void onResponse(retrofit2.Call<StockMarketData> call, retrofit2.Response<StockMarketData> response) {
-          //      stockViewActivity.updateMarketData(response.body());
+                //      stockViewActivity.updateMarketData(response.body());
                 iCallBackUpdate.updateStockMarketData(response.body());
             }
 
@@ -98,8 +97,10 @@ public class ApiFetch {
     }
 
     public void getArticle(String q, ICallBackUpdate iCallBackUpdate) {
+        String currentDate = getDateAgoByTimeStamp(0);
+        String targetDate = getDateAgoByTimeStamp(30);
         Log.d(TAG, "getArticle: " + q.toLowerCase());
-        IRetrofitApiFetchTest.iRetrofitApiFetch.getArticles(q.toLowerCase(), "2022-06-15", "2022-07-07", "popularity", "10", "1").enqueue(new retrofit2.Callback<NewsModel>() {
+        IRetrofitApiFetchTest.iRetrofitApiFetch.getArticles(q.toLowerCase(), targetDate, currentDate, "popularity", "10", "1").enqueue(new retrofit2.Callback<NewsModel>() {
 
             @Override
             public void onResponse(retrofit2.Call<NewsModel> call, retrofit2.Response<NewsModel> response) {
@@ -113,13 +114,13 @@ public class ApiFetch {
         });
     }
 
-    public void getMainArticle(HomeFragment featureFragment) {
-        String currentDate=getDateAgoByTimeStamp(0);
-        String targetDate=getDateAgoByTimeStamp(30);
-        IRetrofitApiFetchTest.iRetrofitApiFetch.getArticles("crypto", targetDate, currentDate, "publishedAt", "15", "1").enqueue(new retrofit2.Callback<NewsModel>() {
+    public void getMainArticle(String q, ICallBackUpdate iCallBackUpdate) {
+        String currentDate = getDateAgoByTimeStamp(0);
+        String targetDate = getDateAgoByTimeStamp(30);
+        IRetrofitApiFetchTest.iRetrofitApiFetch.getArticles(q, targetDate, currentDate, "publishedAt", "15", "1").enqueue(new retrofit2.Callback<NewsModel>() {
             @Override
             public void onResponse(retrofit2.Call<NewsModel> call, retrofit2.Response<NewsModel> response) {
-                featureFragment.updateListNews(response.body().getArticles());
+                iCallBackUpdate.updateNews(response.body().getArticles());
             }
 
             @Override
@@ -129,11 +130,11 @@ public class ApiFetch {
         });
     }
 
-    private String getDateAgoByTimeStamp(int day){
+    private String getDateAgoByTimeStamp(int day) {
         Date curDate = new Date();
         Date newDate = new Date(curDate.getTime() - (day * 24 * 3600 * 1000));
-        SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");
-        String currentDateString=  sdf.format(newDate);
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        String currentDateString = sdf.format(newDate);
         return currentDateString;
     }
 }

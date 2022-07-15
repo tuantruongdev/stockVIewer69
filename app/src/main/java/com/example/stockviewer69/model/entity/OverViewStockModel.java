@@ -80,19 +80,13 @@ public class OverViewStockModel {
         double open = stockPriceHistory.get(0).getClose();
         double close = stockPriceHistory.get(historyCount - 1).getClose();
         DecimalFormat df = new DecimalFormat("#.00");
-
         Log.d(TAG, "checkGainPercentage: open " + open + "+ close:" + close);
 
         if (open > close) {
-
-
             return Double.parseDouble(df.format(((open / close) * 100 - 100) * -1).replace(',', '.'));
         }
         Log.d(TAG, "checkGainPercentage: open: " + open + " close: " + close);
-
         return Double.parseDouble(df.format((close / open) * 100 - 100).replace(',', '.'));
-
-
     }
 
     private double getLastestPrice(ArrayList<DetailStockModel> stockPriceHistory) {
@@ -104,10 +98,6 @@ public class OverViewStockModel {
             return lastestPrice;
         }
         DecimalFormat df = new DecimalFormat("#.00");
-
-        // return 0;
-
-        // Number number= df.(lastestPrice);
         Log.d(TAG, "getLastestPrice: " + df.format(lastestPrice));
         String myNum = df.format(lastestPrice).replace(',', '.');
         return Double.parseDouble(myNum);

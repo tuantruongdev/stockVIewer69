@@ -1,6 +1,4 @@
-package com.example.stockviewer69.activity;
-
-import androidx.appcompat.app.AppCompatActivity;
+package com.example.stockviewer69.view.activity;
 
 import android.content.Context;
 import android.content.Intent;
@@ -15,18 +13,21 @@ import android.webkit.WebViewClient;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.example.stockviewer69.R;
 import com.example.stockviewer69.model.entity.NewsModel;
+import com.example.stockviewer69.utils.Const;
 
 public class WebviewActivity extends AppCompatActivity {
     WebView theWebPage;
     ImageView back;
     TextView url;
 
-    public void starter(Context context, NewsModel.Article news){
+    public void starter(Context context, NewsModel.Article news) {
         Intent intent = new Intent(context, WebviewActivity.class);
-        intent.putExtra("url", news.url);
-        intent.putExtra("source", news.source.name);
+        intent.putExtra(Const.Key.URL, news.url);
+        intent.putExtra(Const.Key.SOURCE, news.source.name);
         context.startActivity(intent);
     }
 
@@ -41,17 +42,18 @@ public class WebviewActivity extends AppCompatActivity {
             window.setStatusBarColor(getResources().getColor(R.color.primaryDark));
         }
         overridePendingTransition(R.anim.slide_in, R.anim.slide_nothin);
-        url=findViewById(R.id.url);
-        back=findViewById(R.id.back);
+        url = findViewById(R.id.url);
+        back = findViewById(R.id.back);
         theWebPage = findViewById(R.id.webView);
         theWebPage.setWebViewClient(new WebViewClient());
-        WebSettings webSettings=theWebPage.getSettings();
+        WebSettings webSettings = theWebPage.getSettings();
         webSettings.setJavaScriptEnabled(true);
         webSettings.setDomStorageEnabled(true);
-        theWebPage.loadUrl(getIntent().getStringExtra("url"));
-        url.setText(getIntent().getStringExtra("source"));
+        theWebPage.loadUrl(getIntent().getStringExtra(Const.Key.URL));
+        url.setText(getIntent().getStringExtra(Const.Key.SOURCE));
         bind();
     }
+
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (event.getAction() == KeyEvent.ACTION_DOWN) {
@@ -68,7 +70,7 @@ public class WebviewActivity extends AppCompatActivity {
         return super.onKeyDown(keyCode, event);
     }
 
-    public void bind(){
+    public void bind() {
         back.setOnClickListener(v -> {
             if (theWebPage.canGoBack()) {
                 theWebPage.goBack();

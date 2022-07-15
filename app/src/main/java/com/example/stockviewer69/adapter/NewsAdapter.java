@@ -10,17 +10,15 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.stockviewer69.R;
-import com.example.stockviewer69.activity.WebviewActivity;
 import com.example.stockviewer69.model.entity.NewsModel;
 import com.example.stockviewer69.utils.Const;
+import com.example.stockviewer69.view.activity.WebviewActivity;
 
 import java.util.ArrayList;
 
 public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> {
-
     MainStockAdapter.ICallBackMain mListener;
     private ArrayList<NewsModel.Article> listNews;
-
     private LayoutInflater layoutInflater;
 
     public NewsAdapter(ArrayList<NewsModel.Article> listNews, MainStockAdapter.ICallBackMain mListener) {
@@ -52,16 +50,17 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> {
         return listNews.size();
     }
 
-    public ArrayList<NewsModel.Article> getAllNews(){
+    public ArrayList<NewsModel.Article> getAllNews() {
         return this.listNews;
     }
-    public void setAllNews(ArrayList<NewsModel.Article> news){
-        this.listNews=news;
-    }
-    public void addNews(NewsModel.Article article){
-        this.listNews.add(article);
+
+    public void setAllNews(ArrayList<NewsModel.Article> news) {
+        this.listNews = news;
     }
 
+    public void addNews(NewsModel.Article article) {
+        this.listNews.add(article);
+    }
 
 
     NewsModel.Article getItem(int i) {
@@ -72,6 +71,7 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> {
         TextView title, author, timeAgo;
         ImageView newsThumb;
         private MainStockAdapter.ItemClickListener itemClickListener;
+
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             title = itemView.findViewById(R.id.newsTitle);

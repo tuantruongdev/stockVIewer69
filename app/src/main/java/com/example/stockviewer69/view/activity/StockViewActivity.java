@@ -1,4 +1,4 @@
-package com.example.stockviewer69.activity;
+package com.example.stockviewer69.view.activity;
 
 import static android.content.ContentValues.TAG;
 import static com.example.stockviewer69.model.IRetrofitApiFetch.gson;
@@ -44,7 +44,7 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Locale;
 
-public class StockViewActivity extends AppCompatActivity implements MainStockAdapter.ICallBackMain,View.OnClickListener, ICallBackUpdate {
+public class StockViewActivity extends AppCompatActivity implements MainStockAdapter.ICallBackMain, View.OnClickListener, ICallBackUpdate {
     private final int DAY = 1;
     private final int WEEK = 7;
     private final int MONTH = 30;
@@ -67,12 +67,12 @@ public class StockViewActivity extends AppCompatActivity implements MainStockAda
 
     public void starter(Context context, OverViewStockModel o) {
         Intent intent = new Intent(context, StockViewActivity.class);
-        intent.putExtra("stockShortName", o.getStockShortName());
-        intent.putExtra("stockFullName", o.getStockFullName());
-        intent.putExtra("stockPrice", BigDecimal.valueOf(o.getStockPrice()) + " USD");
-        intent.putExtra("stockGain", o.getStockGain());
-        intent.putExtra("stockId", o.getStockId());
-        intent.putExtra("stockMarketChart", gson.toJson(o));
+        intent.putExtra(Const.Key.STOCK_SHORT_NAME, o.getStockShortName());
+        intent.putExtra(Const.Key.STOCK_FULL_NAME, o.getStockFullName());
+        intent.putExtra(Const.Key.STOCK_PRICE, BigDecimal.valueOf(o.getStockPrice()) + " USD");
+        intent.putExtra(Const.Key.STOCK_GAIN, o.getStockGain());
+        intent.putExtra(Const.Key.STOCK_ID, o.getStockId());
+        intent.putExtra(Const.Key.STOCK_MARKET_CHART, gson.toJson(o));
 
         context.startActivity(intent);
     }
@@ -117,11 +117,12 @@ public class StockViewActivity extends AppCompatActivity implements MainStockAda
         sAt = findViewById(R.id.statsAt);
 
         newsRecyclerView = findViewById(R.id.newsRecycleView);
-        newsAdapter = new NewsAdapter(new ArrayList<NewsModel.Article>() , this);
+        newsAdapter = new NewsAdapter(new ArrayList<NewsModel.Article>(), this);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(StockViewActivity.this);
         newsRecyclerView.setAdapter(newsAdapter);
         newsRecyclerView.setLayoutManager(linearLayoutManager);
-        stockViewController= new StockViewController(this);
+        stockViewController = new StockViewController(this);
+        stockViewController.init();
         bind();
         initial();
     }
@@ -134,7 +135,7 @@ public class StockViewActivity extends AppCompatActivity implements MainStockAda
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.stats1h:
                 clickChangeTime(TIME_OF_HOUR, (TextView) v);
             case R.id.stats24h:
@@ -149,6 +150,7 @@ public class StockViewActivity extends AppCompatActivity implements MainStockAda
                 clickChangeTime(YEAR * TIME_OF_DAY, (TextView) v);
         }
     }
+
     ///????????
     @Override
     public void setImageWithGlide(String url, int type, ImageView stockIcon) {
@@ -205,14 +207,14 @@ public class StockViewActivity extends AppCompatActivity implements MainStockAda
     private void clickChangeTime(Long time, TextView tvTime) {
         Intent intent = getIntent();
 
-            try {
-                ApiFetch apiFetch = new ApiFetch();
-                apiFetch.getMarketChartData(intent.getStringExtra("stockId"), "usd", String.valueOf(System.currentTimeMillis() / 1000 - 1000 - time), this);
-                resetTimeBtn();
-                tvTime.setBackground(getDrawable(R.drawable.card_view_bg_pure));
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+        try {
+            ApiFetch apiFetch = new ApiFetch();
+            apiFetch.getMarketChartData(intent.getStringExtra("stockId"), "usd", String.valueOf(System.currentTimeMillis() / 1000 - 1000 - time), this);
+            resetTimeBtn();
+            tvTime.setBackground(getDrawable(R.drawable.card_view_bg_pure));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     private void resetTimeBtn() {
@@ -227,11 +229,11 @@ public class StockViewActivity extends AppCompatActivity implements MainStockAda
 
     private void initial() {
         Intent intent = getIntent();
-        stockShortName.setText(intent.getStringExtra("stockShortName"));
-        stockFullName.setText(intent.getStringExtra("stockFullName"));
-        stockPrice.setText(intent.getStringExtra("stockPrice"));
-        stockGainScore = intent.getDoubleExtra("stockGain", 0);
-        String stockMarketChart = intent.getStringExtra("stockMarketChart");
+        stockShortName.setText(intent.getStringExtra(Const.Key.STOCK_SHORT_NAME));
+        stockFullName.setText(intent.getStringExtra(Const.Key.STOCK_FULL_NAME));
+        stockPrice.setText(intent.getStringExtra(Const.Key.STOCK_PRICE));
+        stockGainScore = intent.getDoubleExtra(Const.Key.STOCK_GAIN, 0);
+        String stockMarketChart = intent.getStringExtra(Const.Key.STOCK_MARKET_CHART);
         overViewStockModel = gson.fromJson(stockMarketChart, OverViewStockModel.class);
         updateMarketChart(overViewStockModel);
 
@@ -240,9 +242,10 @@ public class StockViewActivity extends AppCompatActivity implements MainStockAda
         }
         stockGain.setText(stockGainScore + "%");
 
-        stockViewController.getNews(intent.getStringExtra("stockFullName"));
-        stockViewController.getMarketData(intent.getStringExtra("stockId"));
+        stockViewController.getNews(intent.getStringExtra(Const.Key.STOCK_FULL_NAME));
+        stockViewController.getMarketData(intent.getStringExtra(Const.Key.STOCK_ID));
     }
+
     public String truncateNumber(double floatNumber) {
         long million = 1000000L;
         long billion = 1000000000L;
@@ -278,7 +281,6 @@ public class StockViewActivity extends AppCompatActivity implements MainStockAda
         } else {
             lineColor = ContextCompat.getColor(getApplicationContext(), R.color.greenUp);
         }
-
         stockPrice.setText(entries.get(entries.size() - 1).getY() + " USD");
         dataSet.setColor(lineColor);
         dataSet.setDrawCircles(false);
@@ -289,17 +291,14 @@ public class StockViewActivity extends AppCompatActivity implements MainStockAda
         lineChart.setData(lineData);
         lineChart.invalidate();
         modifyLineChart(lineChart);
-
     }
 
     public void updateMarketChartByTime(MarketChartModel marketChartModel) {
         ArrayList<Entry> entries = new ArrayList<>();
-
         try {
             for (int i = 0; i < marketChartModel.getPrices().size(); i++) {
                 entries.add(new Entry(i, Float.valueOf(marketChartModel.getPrices().get(i).get(1).toString())));
             }
-
             LineDataSet dataSet = new LineDataSet(entries, "dataset");
             int lineColor;
             if (stockGainScore < 0) {
@@ -307,7 +306,6 @@ public class StockViewActivity extends AppCompatActivity implements MainStockAda
             } else {
                 lineColor = ContextCompat.getColor(getApplicationContext(), R.color.greenUp);
             }
-
             stockPrice.setText(String.valueOf(entries.get(entries.size() - 1).getY()) + " USD");
             dataSet.setColor(lineColor);
             dataSet.setDrawCircles(false);
@@ -323,7 +321,6 @@ public class StockViewActivity extends AppCompatActivity implements MainStockAda
             Toast.makeText(getApplicationContext(), "Too many request, try again later", Toast.LENGTH_SHORT).show();
         }
     }
-
 
 
     void modifyLineChart(LineChart lineChart) {
@@ -352,7 +349,6 @@ public class StockViewActivity extends AppCompatActivity implements MainStockAda
         lineChart.getAxisRight().setDrawLabels(false);
         //lineChart.getAxisRight().setDrawAxisLine(false);
     }
-
 
 
 }
