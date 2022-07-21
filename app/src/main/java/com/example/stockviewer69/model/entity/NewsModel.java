@@ -91,6 +91,7 @@ public class NewsModel {
             timesString.add("year");
             timesString.add("month");
             timesString.add("day");
+            timesString.add("hour");
             timesString.add("minute");
             timesString.add("second");
 
