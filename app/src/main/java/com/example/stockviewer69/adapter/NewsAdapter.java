@@ -61,7 +61,9 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> {
     public void addNews(NewsModel.Article article) {
         this.listNews.add(article);
     }
-
+    public void addAllNews(ArrayList<NewsModel.Article> articles) {
+        this.listNews = articles;
+    }
 
     NewsModel.Article getItem(int i) {
         return listNews.get(i);

@@ -13,13 +13,19 @@
         android:layout_height="55dp"
         android:layout_marginTop="10dp">
 
-        <ImageView
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/back"
-            android:layout_width="25dp"
-            android:layout_height="25dp"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="10dp"
-            android:src="@drawable/ic_baseline_arrow_back_ios_new_24" />
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/white"
+            app:borderWidth="0dp"
+            app:fabSize="mini"
+            app:rippleColor="@color/gray"
+            android:elevation="0dp"
+            app:elevation="0dp"
+            app:srcCompat="@drawable/ic_baseline_arrow_back_ios_new_24"
+            app:tint="@color/black" />
+
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -67,14 +73,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
-            android:layout_marginRight="15dp">
-
-            <ImageView
-                android:layout_width="25dp"
-                android:layout_height="25dp"
-                android:src="@drawable/ic_baseline_star_border_24" />
-
-        </LinearLayout>
+            android:layout_marginRight="15dp"/>
     </RelativeLayout>
 
     <androidx.core.widget.NestedScrollView
@@ -85,11 +84,12 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
+
             android:orientation="vertical">
 
             <RelativeLayout
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
@@ -143,6 +143,8 @@
             </RelativeLayout>
 
             <LinearLayout
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
@@ -208,6 +210,8 @@
             </LinearLayout>
 
             <com.github.mikephil.charting.charts.LineChart
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
                 android:id="@+id/lineChart"
                 android:layout_width="match_parent"
                 android:layout_height="300dp"
@@ -215,10 +219,11 @@
                 android:layout_marginBottom="10dp" />
 
             <GridLayout
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
+
                 android:columnCount="2">
 
                 <LinearLayout
@@ -400,6 +405,8 @@
             </GridLayout>
 
             <LinearLayout
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
@@ -420,5 +427,7 @@
                 tools:listitem="@layout/news_items">
             </androidx.recyclerview.widget.RecyclerView>
         </LinearLayout>
+
+
     </androidx.core.widget.NestedScrollView>
 </RelativeLayout>

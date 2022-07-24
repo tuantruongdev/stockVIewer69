@@ -125,10 +125,11 @@ public class HomeFragment extends Fragment implements MainStockAdapter.ICallBack
 
     @Override
     public void updateNews(ArrayList<NewsModel.Article> article) {
-        for (int i = 0; i < article.size() - 1; i++) {
-            newsAdapter.addNews(article.get(i));
-            Log.d(TAG, "updateListNews: " + article.get(i).title);
-        }
+//        for (int i = 0; i < article.size() - 1; i++) {
+//            newsAdapter.addNews(article.get(i));
+//            Log.d(TAG, "updateListNews: " + article.get(i).title);
+//        }
+        newsAdapter.addAllNews(article);
         newsAdapter.notifyDataSetChanged();
     }
 }

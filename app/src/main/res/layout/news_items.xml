@@ -1,11 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     app:cardCornerRadius="1dp">
 
     <LinearLayout
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
@@ -27,8 +30,7 @@
                     android:id="@+id/newsTitle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Jay-Z and Jack Dorsey Launch Bitcoin Academy for New Generation of Crypto Bros
-"
+                    android:text="Jay-Z and Jack Dorsey Launch Bitcoin Academy for New Generation of Crypto Bros"
                     android:textColor="@color/black"
                     android:textSize="15dp"
                     android:textStyle="bold" />
@@ -41,7 +43,6 @@
                     android:orientation="horizontal">
 
                     <TextView
-
                         android:id="@+id/newsSource"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -58,13 +59,11 @@
                         android:src="@drawable/ic_baseline_circle_24" />
 
                     <TextView
-
                         android:id="@+id/newsETime"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="13h ago" />
                 </LinearLayout>
-
             </RelativeLayout>
 
             <androidx.cardview.widget.CardView
@@ -80,15 +79,11 @@
                     android:scaleType="center"
                     android:src="@drawable/ic_launcher_background" />
             </androidx.cardview.widget.CardView>
-
-
         </LinearLayout>
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="2dp"
-            android:background="#C7CEDD">
-
-        </RelativeLayout>
+            android:background="#C7CEDD"></RelativeLayout>
     </LinearLayout>
 </com.google.android.material.card.MaterialCardView>

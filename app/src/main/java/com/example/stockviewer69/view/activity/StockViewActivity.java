@@ -185,12 +185,14 @@ public class StockViewActivity extends AppCompatActivity implements MainStockAda
     }
 
     @Override
-    public void updateNews(ArrayList<NewsModel.Article> article) {
+    public void updateNews(ArrayList<NewsModel.Article> articles) {
         // news=article;
-        for (int i = 0; i < article.size() - 1; i++) {
-            newsAdapter.addNews(article.get(i));
-            Log.d(TAG, "updateListNews: " + article.get(i).title);
-        }
+            newsAdapter.addAllNews(articles);
+//        for (int i = 0; i < article.size() - 1; i++) {
+//            newsAdapter.addNews(article.get(i));
+//            Log.d(TAG, "updateListNews: " + article.get(i).title);
+//        }
+       // newsAdapter
         newsAdapter.notifyDataSetChanged();
     }
 

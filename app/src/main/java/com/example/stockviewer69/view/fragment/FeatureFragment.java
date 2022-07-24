@@ -114,6 +114,6 @@ public class FeatureFragment extends Fragment implements MainStockAdapter.ICallB
     public void updateStockMarketData(OverViewStockModel o) {
         Log.d("1336", "updateList: ");
         mainStockAdapter.addStock(o);
-        mainStockAdapter.notifyDataSetChanged();
+       // mainStockAdapter.notifyDataSetChanged();
     }
 }

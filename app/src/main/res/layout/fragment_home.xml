@@ -41,23 +41,6 @@
             android:layout_marginRight="25dp"
             android:showDividers="middle">
 
-            <ImageView
-                android:id="@+id/iconSearch"
-                android:layout_width="28dp"
-                android:layout_height="28dp"
-                android:layout_centerVertical="true"
-                android:layout_weight="1"
-                android:src="@drawable/ic_baseline_search_24" />
-
-            <ImageView
-
-                android:id="@+id/iconBell"
-                android:layout_width="28dp"
-                android:layout_height="28dp"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="15dp"
-                android:layout_weight="1"
-                android:src="@drawable/ic_baseline_notifications_none_24" />
 
         </LinearLayout>
     </RelativeLayout>
@@ -100,7 +83,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/fragmentContainerGainerLoser"
-                        android:layout_margin="15dp"
+                        android:layout_marginTop="15dp"
+                        android:layout_marginBottom="15dp"
                         tools:listitem="@layout/news_items"></androidx.recyclerview.widget.RecyclerView>
 
                 </RelativeLayout>

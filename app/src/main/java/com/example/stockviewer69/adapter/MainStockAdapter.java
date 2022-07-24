@@ -25,7 +25,7 @@ import java.util.ArrayList;
 public class MainStockAdapter extends RecyclerView.Adapter<MainStockAdapter.ViewHolder> {
     private final ICallBackMain mListener;
     private final ICallBackSetColor cbSetColor;
-    private final ArrayList<OverViewStockModel> stockData;
+    private ArrayList<OverViewStockModel> stockData;
     private LayoutInflater layoutInflater;
 
     public MainStockAdapter(ArrayList<OverViewStockModel> stockData, ICallBackMain mListener, ICallBackSetColor cbSetColor) {
@@ -86,7 +86,13 @@ public class MainStockAdapter extends RecyclerView.Adapter<MainStockAdapter.View
     }
 
     public void addStock(OverViewStockModel o) {
-        this.stockData.add(o);
+        ArrayList<OverViewStockModel> temp = new ArrayList<OverViewStockModel>(this.stockData);
+        temp.add(o);
+        this.clearStock();
+        //notifyDataSetChanged();
+        this.stockData = temp;
+        notifyDataSetChanged();
+       // this.stockData.add(o);
     }
 
     void modifyLineChart(LineChart lineChart) {
